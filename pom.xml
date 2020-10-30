@@ -134,14 +134,6 @@
 	</build>
 
 	<modules>
-		<!--
-		<module>aidoudong-oauth2-server</module>
-		<module>aidoudong-discovery-eureka</module>
-		<module>aidoudong-discovery-zuul</module>
-		<module>aidoudong-discovery-admin</module>
-		<module>aidoudong-api</module>
-		<module>aidoudong-client</module>
-		-->
 		<module>aidoudong-manager</module>
 		<module>aidoudong-business</module>
 		<module>aidoudong-common</module>
