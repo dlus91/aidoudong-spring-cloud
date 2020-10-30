@@ -1,6 +1,7 @@
 package com.aidoudong.common.result;
 
 import aidoudong.common.resultview.AbstractFastJsonResultView;
+import aidoudong.common.resultview.AbstractResultView;
 import com.aidoudong.common.utils.DictionaryCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -39,6 +40,26 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 			"code","message","data","content","first","last","number",
 			"numberOfElements","pageable","offset","pageNumber","pageSize","paged","sort","sorted","unsorted","unpaged","size","sort","$ref","totalElements","totalPages"
 	};
+
+	@Override
+	public String ok(AbstractResultView data) {
+		return super.ok(data);
+	}
+
+	@Override
+	public String include(AbstractResultView data, String[] includeProperties) {
+		return super.include(data, includeProperties);
+	}
+
+	@Override
+	public String exclude(AbstractResultView data, String[] excludeProperties) {
+		return super.exclude(data, excludeProperties);
+	}
+
+	@Override
+	public String fail(AbstractResultView data) {
+		return super.fail(data);
+	}
 
 	@Override
 	public String[] getIfPageInfoIncludeProperties(Object data, String[] includeProperties) {
