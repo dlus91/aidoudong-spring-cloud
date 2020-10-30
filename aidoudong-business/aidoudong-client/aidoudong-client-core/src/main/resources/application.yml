@@ -1,0 +1,56 @@
+spring:
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:9910
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://192.168.1.160:9411/ # 指定了 Zipkin 服务器的地址
+    
+security:
+  oauth2:
+    client:
+      client-id: aidoudong-product # 当前客户端id
+      client-secret: 123456 # 当前客户端密码
+      user-authorization-uri: http://localhost:9801/auth/oauth/authorize # 请求认证的地址，获取授权码地址
+      access-token-uri: http://localhost:9801/auth/oauth/token # 请求令牌地址
+    resource:
+      jwt:
+              # 当用户授权之后会响应一个授权码，重定向到当前应用的 http://localhost:11221/login?code=xxx
+              # 自动的会对 /login 去获取令牌，获取到令牌后会通过 key-uri 获取到的公钥进行解密然后进行本地身份认证和授权  （最后还是会用session管理 ） 
+        key-uri: http://localhost:9801/auth/oauth/token_key # 获取公钥
+        
+info:
+  head: ${spring.application.name}:${server.port}
+  body: is running
+management:
+  endpoints:
+    web:
+      exposure:
+        #加载所有的端点，默认只加载了info、health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+       #可以关闭指定的端点
+    shutdown:
+      enabled: false
+eureka:
+  client:
+    register-with-eureka: true # 服务注册开关
+    fetch-registry: true # 服务发现开关
+    serviceUrl:
+      defaultZone: http://admin:123456@localhost:9761/eureka
+#      defaultZone: http://admin:123456@peer1:9861/eureka/,http://admin:123456@peer2:9862/eureka/,http://admin:123456@peer3:9863/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+#    hostname: localhost #eureka服务端的实例名称 
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${server.port}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    lease-renewal-interval-in-seconds: 5        

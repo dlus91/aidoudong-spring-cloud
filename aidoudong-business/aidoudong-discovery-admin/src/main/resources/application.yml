@@ -1,0 +1,38 @@
+# 服务端口
+server:
+  port: 9910
+# 应用名称
+# 这个变量必须写在这里，因为项目启动的时候需要记录日志文件，如果写在git上讲导致生成bootstrap.log和springAppName_IS_UNDEFINED.log
+spring:
+  application:
+    name: aidoudong-discovery-admin
+  security:    user:      name: admin
+      password: 123456
+info:
+  head: ${spring.application.name}:${server.port}
+  body: is running
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:9761/eureka
+    healthcheck:
+      enabled: true
+  instance:
+    hostname: localhost #eureka服务端的实例名称 
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${server.port}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    status-page-url-path: http://${eureka.instance.hostname}:${server.port}/actuator/info
+    metadata-map:      user.name: admin
+      user.password: 1234
+management:
+  endpoints:
+    web:
+      exposure:
+        #加载所有的端点，默认只加载了info、health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    #可以关闭指定的端点
+    shutdown:
+      enabled: false

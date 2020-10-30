@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aidoudong.dao.system.mapper.SysUserMapper">
+
+	<select id="selectPage" resultType="com.aidoudong.entity.system.SysUser">
+		SELECT
+			*
+		FROM
+			sys_user
+		WHERE
+			is_enabled = 1
+		<if test="u.username != null and u.username != ''">
+			AND username LIKE CONCAT("%", #{u.username}, "%")
+		</if>
+		<if test="u.mobile != null and u.mobile != ''">
+			AND mobile = #{u.mobile}
+		</if>
+	</select>
+	
+	<!-- 通过用户id删除用户角色关系表数据 -->
+	<delete id="deleteUserRoleByUserId">
+		delete from sys_user_role where user_id = #{userId}
+	</delete>
+	
+	<insert id="saveUserRoleByUserId">
+		insert into sys_user_role(user_id,role_id) values
+		<foreach collection="roleIds" item="item" separator=",">
+			(#{userId},#{item})
+		</foreach>
+	</insert>
+
+</mapper>

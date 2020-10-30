@@ -1,0 +1,70 @@
+server:
+  port: 9801
+spring:
+  application:
+    name: aidoudong-discovery-zuul
+  # 安全认证的配置
+  security:  
+    user:  
+      name: admin  # 用户名  
+      password: 123456   # 用户密码
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1
+#  zipkin:
+#    base-url: http://192.168.2.160:9411/ # 指定了 Zipkin 服务器的地址
+info:
+  head: ${spring.application.name}:${server.port}
+  body: is running
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:123456@localhost:9761/eureka
+    healthcheck:
+      enabled: true
+  instance:
+    hostname: localhost #eureka服务端的实例名称 
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${server.port}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    status-page-url-path: http://${eureka.instance.hostname}:${server.port}/actuator/info
+management:
+  endpoints:
+    web:
+      exposure:
+        #加载所有的端点，默认只加载了info、health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    #可以关闭指定的端点
+    shutdown:
+      enabled: false
+zuul:
+  sensitive-headers: null # 默认Zuul认为请求头中 "Cookie","Set-Cookie","Authorization" 是敏感信息，它不会转发请求，因为把它设置为空，就会转发了 
+  add-host-header: true # 正确的处理重定向操作
+  routes:
+    authentication: # 路由名称，名称任意，保持所有路由名称唯一
+      path: /auth/** # 访问路径，转发到 auth-server 服务处理  
+      service-id: aidoudong-oauth2-server # 指定服务ID，会自动从eureka中找到此服务的ip和端口
+      strip-prefix: false # 代理转发时去掉前缀，false：代理转发时不去掉前缀  例如：为true时请求 /product/get/1，代理转发到 /get/1
+    resource: # 商品服务路由配置
+      path: /api/** # 转发到 product-server 服务处理 
+      service-id: aidoudong-resource-product
+      strip-prefix: false
+  host:
+    connect-timeout-millis: 3000
+    socket-timeout-millis: 3000
+ribbon:
+  eureka:
+    enabled: false
+    
+aidoudong-oauth2-server:  #这里是serviceId
+  ribbon:
+    listOfServers: http://localhost:10001/
+aidoudong-resource-product:  #这里是serviceId
+  ribbon:
+    listOfServers: http://localhost:11000/
+    

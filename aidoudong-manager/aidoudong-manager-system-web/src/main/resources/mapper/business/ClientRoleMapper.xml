@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aidoudong.dao.business.mapper.ClientRoleMapper">
+
+	<select id="selectPage" resultType="com.aidoudong.entity.business.ClientRole">
+		select * 
+		from t_client_role 
+		where 1=1
+		<if test="p.name != null and p.name != ''">
+			and name like CONCAT('%',#{p.name},'%')
+		</if>
+	</select>
+	
+	<!-- 通过角色id删除角色权限关系表数据 -->
+	<delete id="deleteRolePermissionByRoleId">
+		delete from t_client_role_permission where role_id = #{roleId}
+	</delete>
+	
+	<insert id="saveRolePermissionByRoleId">
+		insert into t_client_role_permission(role_id,permission_id) values
+		<foreach collection="perIds" item="item" separator=",">
+			(#{roleId},#{item})
+		</foreach>
+	</insert>
+	
+	<select id="findByUserId" resultType="com.aidoudong.entity.business.ClientRole">
+		SELECT
+			r.*
+		FROM
+			t_client_role r
+		JOIN t_client_user_role ur ON r.id = ur.role_id
+		JOIN t_client_user u ON ur.user_id = u.id
+		WHERE
+			u.id = #{userId}
+	</select>
+
+</mapper>

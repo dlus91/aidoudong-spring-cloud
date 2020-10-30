@@ -1,0 +1,49 @@
+server:
+  port: 9761
+spring:
+  application:
+    name: aidoudong-discovery-eureka
+  # 安全认证的配置
+  security:
+    user:
+      name: admin  # 用户名
+      password: 123456   # 用户密码 
+info:
+  head: ${spring.application.name}:${server.port}
+  body: is running
+  #项目配置说明，通过http://ip(xxx):端口(xxx)/info进行查询
+  app:
+    name: ${spring.application.name}
+    encoding: UTF-8
+    java: 
+      source: 1.8
+      target: 1.8
+eureka:
+  instance:
+    hostname: localhost #eureka服务端的实例名称
+    prefer-ip-address: true
+  client:
+    # false表示不向注册中心注册自己
+    register-with-eureka: false
+    # false表示该端就是注册中心，维护服务实例，不去检索服务
+    fetch-registry: false
+    service-url:
+      defaultZone: http://admin:123456@${eureka.instance.hostname}:${server.port}/eureka
+  environment: eureka
+  datacenter: cloud
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        #加载所有的端点，默认只加载了info、health
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    #可以关闭指定的端点
+    shutdown:
+      enabled: false
+       
+
+

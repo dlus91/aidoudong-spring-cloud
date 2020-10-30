@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aidoudong.product.dao.mapper.ProductMapper">
+
+	<select id="selectProductById" resultType="com.aidoudong.product.entity.Product">
+		select * from t_product where pid = #{pid}
+	</select>
+	
+	<select id="findAll" resultType="com.aidoudong.product.entity.Product">
+		select * from t_product
+	</select>
+	
+</mapper>

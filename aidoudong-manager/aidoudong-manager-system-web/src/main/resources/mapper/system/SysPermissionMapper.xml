@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aidoudong.dao.system.mapper.SysPermissionMapper">
+
+	<select id="selectPermissionByUserId" resultType="com.aidoudong.entity.system.SysPermission">
+		SELECT DISTINCT
+			spermission.*
+		FROM
+			sys_user u
+		LEFT JOIN sys_user_role ur ON ur.user_id = u.id
+		LEFT JOIN sys_role srole ON srole.id = ur.role_id
+		LEFT JOIN sys_role_permission rp ON rp.role_id = srole.id
+		LEFT JOIN sys_permission spermission ON rp.permission_id = spermission.id
+		WHERE
+			u.id = #{userId}
+		ORDER BY
+			u.id DESC
+	</select>
+	
+	<select id="findByRoleId" resultType="com.aidoudong.entity.system.SysPermission">
+		SELECT
+			DISTINCT p.*
+		FROM
+			sys_permission p
+		JOIN sys_role_permission rp ON p.id = rp.permission_id
+		JOIN sys_role r ON rp.role_id = r.id
+		WHERE
+			rp.role_id = #{roleId}
+		ORDER BY p.id
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,36 @@
+server:
+  port: 12000
+  servlet:    session:      timeout: 30m # session会话超时时间,默认30分钟(单位:分钟),不能小于1分钟
+      cookie:        name: JSESSIONID # 指定浏览器Cookie中关于SessionID保存的那个名称#    context-path: /aidoudong
+spring:
+  application:    name: aidoudong-manager-system-web  thymeleaf:    cache: false
+  profiles:
+    active:
+      - dataSources
+      - errorCodeEn
+    
+aidoudong:
+  security:
+    authentication:
+      loginPage: /login/page # 响应认证登录页URL
+      loginProcessingUrl: /login/form # 登录表单提交URL
+      usernameParameter: name # 登录表单用户名的属性名
+      passwordParameter: pwd  # 登录表单密码的属性名
+      staticPaths: # 静态资源 "/dist/**", "/modules/**", "/plugins/**"
+        - /dist/**
+        - /modules/**
+        - /plugins/**
+        - /templates/**
+        - /swagger-resources/**
+        - /swagger-ui.html
+        - /v2/**
+        - /webjars/**
+        
+      loginType: REDIRECT # 认证之后 响应的类型：JSON/REDIRECT
+      imageCodeUrl: /code/image # 获取图形验证码地址
+      mobilePageUrl: /mobile/page #获取手机登录页面
+      mobileImageCodeUrl: /code/mobile #获取手机图形验证码地址
+      mobileLoginProcessingUrl: /mobie/form # 手机登录表单提交URL
+      tokenValiditySeconds: 604800
+#     "/code/image","/mobile/page","/code/mobile"
+

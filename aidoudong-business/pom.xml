@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.aidoudong</groupId>
+	<artifactId>aidoudong-business</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- 依赖版本管理 -->
+	<properties>
+		<!-- 
+		<aidoudong-oauth2-server.version>0.0.1-SNAPSHOT</aidoudong-oauth2-server.version>
+		<aidoudong-discovery-eureka-manager.version>0.0.1-SNAPSHOT</aidoudong-discovery-eureka-manager.version>
+		<aidoudong-discovery-zuul.version>0.0.1-SNAPSHOT</aidoudong-discovery-zuul.version>
+		<aidoudong-api.version>0.0.1-SNAPSHOT</aidoudong-api.version>
+		<aidoudong-client.version>0.0.1-SNAPSHOT</aidoudong-client.version>
+		
+		 -->
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>aidoudong</groupId>
+			<artifactId>aidoudong-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 工具类依赖 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	
+
+	<modules>
+		<module>aidoudong-oauth2-server</module>
+		<module>aidoudong-discovery-eureka</module>
+		<module>aidoudong-discovery-zuul</module>
+		<module>aidoudong-api</module>
+		<module>aidoudong-client</module>
+		<!-- <module>aidoudong-discovery-admin</module> -->
+	</modules>
+
+
+</project>
