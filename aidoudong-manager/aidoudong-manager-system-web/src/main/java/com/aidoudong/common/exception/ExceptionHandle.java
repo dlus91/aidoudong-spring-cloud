@@ -52,7 +52,7 @@ public class ExceptionHandle {
     public String handleParamException(MethodArgumentNotValidException methodArgumentNotValidException , HttpServletRequest request) {
 		BindingResult results = methodArgumentNotValidException.getBindingResult();
 		List<ObjectError> errorList = results.getAllErrors();
-		List<String> resultList = new LinkedList<>();
+		List<String> resultList = new ArrayList<>();
         Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
 		for(ObjectError error : errorList) {
 			resultList.add(errorCodeProps.getProperty(error.getDefaultMessage()));

@@ -15,18 +15,9 @@
 		<aidoudong-discovery-zuul.version>0.0.1-SNAPSHOT</aidoudong-discovery-zuul.version>
 		<aidoudong-api.version>0.0.1-SNAPSHOT</aidoudong-api.version>
 		<aidoudong-client.version>0.0.1-SNAPSHOT</aidoudong-client.version>
-		
 		 -->
 	</properties>
 	
-	<dependencies>
-		<dependency>
-			<groupId>aidoudong</groupId>
-			<artifactId>aidoudong-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- 工具类依赖 -->
@@ -52,9 +43,15 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
-	
 
+	<dependencies>
+		<dependency>
+			<groupId>aidoudong</groupId>
+			<artifactId>aidoudong-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	
 	<modules>
 		<module>aidoudong-oauth2-server</module>
 		<module>aidoudong-discovery-eureka</module>

@@ -34,7 +34,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 				securityProperties.getAuthentication().getLoginType())) {
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			// 认证失败响应json字符串
-			response.getWriter().write(new SimpleResultView().build(HttpStatus.UNAUTHORIZED.value(),exception.getMessage()));
+			response.getWriter().write(new SimpleResultView().build(HttpStatus.UNAUTHORIZED.value(),exception.getMessage(),null).outPutData());
 		}else {
 //			super.setDefaultFailureUrl(securityProperties.getAuthentication().getLoginPage()+"?error");
 			// 获取上一次请求路径

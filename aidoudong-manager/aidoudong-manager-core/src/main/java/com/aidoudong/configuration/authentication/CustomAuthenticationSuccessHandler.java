@@ -48,7 +48,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 			
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			// 认证成功后，响应json字符串
-			response.getWriter().write(new SimpleResultView().ok("认证成功"));
+			response.getWriter().write(new SimpleResultView().success().outPutData());
 		}else {
 			// 认证成功后，重定向到上次请求的地址上，引发跳转到认证页面的地址
 			logger.info("authentication："+ JSON.toJSONString(authentication));

@@ -41,7 +41,7 @@ public class MobileLoginController {
 		request.getSession().setAttribute(SESSION_KEY, code);
 		// 3, 发送验证码到用户手机上
 		smsSend.sendSms(request.getParameter("mobile"), code);
-		return new SimpleResultView().ok("成功");
+		return new SimpleResultView().success().outPutData();
 	}
 	
 }

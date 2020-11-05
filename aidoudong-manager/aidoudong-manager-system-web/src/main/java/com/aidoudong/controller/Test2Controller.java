@@ -52,13 +52,9 @@ public class Test2Controller {
 		map.put("accountNonExpired", "effective_type");
 		map.put("accountNonLocked", "effective_type");
 		map.put("enabled", "effective_type");
-		ResultView resultView = new ResultView();
-		resultView.setCode(200);
-		resultView.setMessage("成功");
-		resultView.setCodeMap(map);
-		resultView.setData(clientUserService.selectPage(page, user));
+		ResultView resultView = new ResultView(200,"成功",clientUserService.selectPage(page, user));
 		return fastJsonResultView.include(
-				resultView,
+				resultView.codeMap(map),
 				new String[] {"id","username","nickName","mobile","email","accountNonExpired","accountNonLocked","enabled"});
 //				new String[] {"id"});
 	}

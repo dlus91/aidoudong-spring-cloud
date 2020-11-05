@@ -3,9 +3,12 @@ package aidoudong.common.resultview;
 import com.alibaba.fastjson.JSONObject;
 
 import java.beans.Transient;
+import java.io.Serializable;
 import java.util.Map;
 
 public abstract class AbstractResultView {
+
+	private static final long serialVersionUID = 4325431521204380876L;
 
 	public final static String SUCCESS_MESSAGE = "SUCCESS";
 	public final static String FAIL_MESSAGE = "FAIL";
@@ -13,7 +16,7 @@ public abstract class AbstractResultView {
 	private int code;
 	private String message;
 	private Object data;
-	private String dateFomater;
+	private String dateFormater;
 	private Map<String, String> codeMap;
 
 	public AbstractResultView() {}
@@ -24,26 +27,21 @@ public abstract class AbstractResultView {
 		this.data = data;
 	}
 
-	public AbstractResultView(int code, String message, Object data, String dateFomater) {
+	public AbstractResultView build(int code, String message, Object data){
 		this.code = code;
-		this.message = convertMessage(message);
+		this.message = message;
 		this.data = data;
-		this.dateFomater = dateFomater;
+		return this;
 	}
 
-	public AbstractResultView(int code, String message, Object data, Map<String, String> codeMap) {
-		this.code = code;
-		this.message = convertMessage(message);
-		this.data = data;
-		this.codeMap = codeMap;
+	public AbstractResultView dateFormater(String dateFormater){
+		this.dateFormater = dateFormater;
+		return this;
 	}
 
-	public AbstractResultView(int code, String message, Object data, String dateFomater, Map<String, String> codeMap) {
-		this.code = code;
-		this.message = convertMessage(message);
-		this.data = data;
-		this.dateFomater = dateFomater;
+	public AbstractResultView codeMap(Map<String, String> codeMap){
 		this.codeMap = codeMap;
+		return this;
 	}
 
 	public AbstractResultView success(){
@@ -86,34 +84,20 @@ public abstract class AbstractResultView {
 	public int getCode() {
 		return code;
 	}
-	public void setCode(int code) {
-		this.code = code;
-	}
 	public String getMessage() {
 		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
 	}
 	public Object getData() {
 		return data;
 	}
-	public void setData(Object data) {
-		this.data = data;
-	}
+
 	@Transient
 	public String getDateFomater() {
-		return dateFomater;
-	}
-	public void setDateFomater(String dateFomater) {
-		this.dateFomater = dateFomater;
+		return dateFormater;
 	}
 	@Transient
 	public Map<String, String> getCodeMap() {
 		return codeMap;
 	}
-	public void setCodeMap(Map<String, String> codeMap) {
-		this.codeMap = codeMap;
-	}
-	
+
 }

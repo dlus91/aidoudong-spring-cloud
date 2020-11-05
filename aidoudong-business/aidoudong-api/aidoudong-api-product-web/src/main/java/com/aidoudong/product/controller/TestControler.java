@@ -29,10 +29,7 @@ public class TestControler {
 	
 	@GetMapping("/findAll/include")
 	public String include() {
-		ResultView resultView = new ResultView();
-		resultView.setData(productServiceImpl.findAll());
-		resultView.setCode(200);
-		resultView.setMessage(ResultView.SUCCESS_MESSAGE);
+		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
 		return fastJsonResultView.include(
 				resultView,
 				new String[] {"pname","type","price"});
@@ -42,21 +39,15 @@ public class TestControler {
 	public String include2() {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("type", "product_type");
-		ResultView resultView = new ResultView();
-		resultView.setData(productServiceImpl.findAll());
-		resultView.setCode(200);
-		resultView.setMessage(ResultView.SUCCESS_MESSAGE);
-		resultView.setCodeMap(map);
+		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
+		resultView.codeMap(map);
 		return fastJsonResultView.include(resultView,
 				new String[] {"pname","type","price","createTime"});
 	}
 	
 	@GetMapping("/findAll/exclude")
 	public String exclude() {
-		ResultView resultView = new ResultView();
-		resultView.setData(productServiceImpl.findAll());
-		resultView.setCode(200);
-		resultView.setMessage(ResultView.SUCCESS_MESSAGE);
+		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
 		return fastJsonResultView.exclude(
 				resultView,
 				new String[] {"price","createTime"});
@@ -64,11 +55,8 @@ public class TestControler {
 	
 	@GetMapping("/findAll/exclude2")
 	public String exclude2() {
-		ResultView resultView = new ResultView();
-		resultView.setData(productServiceImpl.findAll());
-		resultView.setCode(200);
-		resultView.setMessage(ResultView.SUCCESS_MESSAGE);
-		resultView.setDateFomater("yyyy-MM-dd");
+		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
+		resultView.dateFormater("yyyy-MM-dd");
 		return fastJsonResultView.exclude(
 				resultView,
 				new String[] {"price"});

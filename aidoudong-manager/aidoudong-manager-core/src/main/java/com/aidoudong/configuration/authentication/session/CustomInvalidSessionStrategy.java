@@ -44,7 +44,7 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 		cancelCookie(request,response);
 
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(new SimpleResultView().build(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录"));
+		response.getWriter().write(new SimpleResultView().build(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录",null).outPutData());
 		
 	}
 	
