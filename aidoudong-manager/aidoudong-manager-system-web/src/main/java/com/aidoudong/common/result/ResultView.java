@@ -19,6 +19,11 @@ public class ResultView extends AbstractResultView {
     }
 
     @Override
+    public AbstractResultView build(int code, String message, Object data) {
+        return super.build(code, message, data);
+    }
+
+    @Override
     public AbstractResultView dateFormater(String dateFormater) {
         return super.dateFormater(dateFormater);
     }

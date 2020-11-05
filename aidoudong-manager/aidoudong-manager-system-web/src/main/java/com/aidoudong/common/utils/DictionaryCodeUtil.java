@@ -24,7 +24,7 @@ public class DictionaryCodeUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(DictionaryCodeUtil.class);
 	
-	private static Map<String, Object> codeMap = new HashMap<String,Object>();
+	private static Map<String, Object> codeMap;
 	private static final String jsonObjectType = "JSONObject";
 	private static final String jsonArrayType = "JSONOArray";
 	private static final String pageMybatisPlusType = "MybatisPlusPage";

@@ -39,6 +39,10 @@ public class PropertiesTest{
     }
 
     @Test
+    public void test04(){
+    }
+
+    @Test
     public void test03(){
         Map map = new HashMap();
         map.putIfAbsent("a", 1);

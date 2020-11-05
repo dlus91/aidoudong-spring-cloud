@@ -6,7 +6,10 @@ import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Map;
 
-public abstract class AbstractResultView {
+/**
+ * 该类不提供set方法，而是用建筑者模式提供流式编码风格，避免混乱的情况出现
+ */
+public abstract class AbstractResultView<T> {
 
 	private static final long serialVersionUID = 4325431521204380876L;
 

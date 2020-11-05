@@ -14,13 +14,16 @@ public class PropertiesUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
-	private static Properties errorCodeEnProperties = null;
-	private static Properties sensitiveCodeProperties = null;
+	private static final Properties errorCodeEnProperties;
+	private static final Properties sensitiveCodeProperties;
 
 	static{
 		errorCodeEnProperties = PropertiesUtil.getProperties("config/application-errorCodeEn.properties");
 		sensitiveCodeProperties = PropertiesUtil.getProperties("config/application-sensitiveCode.properties");
 	}
+
+	//the class is not instanll
+	private PropertiesUtil() { }
 
 	public static Properties getProperties(String location){
 		Properties props = null;

@@ -18,16 +18,19 @@ public class ResultView extends AbstractResultView {
         super(code, message, data);
     }
 
-    public ResultView(int code, String message, Object data, String dateFomater) {
-        super(code, message, data, dateFomater);
+    @Override
+    public AbstractResultView build(int code, String message, Object data) {
+        return super.build(code, message, data);
     }
 
-    public ResultView(int code, String message, Object data, Map<String, String> codeMap) {
-        super(code, message, data, codeMap);
+    @Override
+    public AbstractResultView dateFormater(String dateFormater) {
+        return super.dateFormater(dateFormater);
     }
 
-    public ResultView(int code, String message, Object data, String dateFomater, Map<String, String> codeMap) {
-        super(code, message, data, dateFomater, codeMap);
+    @Override
+    public AbstractResultView codeMap(Map<String, String> codeMap) {
+        return super.codeMap(codeMap);
     }
 
     @Override
