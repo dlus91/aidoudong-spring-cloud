@@ -21,6 +21,7 @@ public class DictionaryCodeUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(DictionaryCodeUtil.class);
 	private static Map<String, Object> codeMap;
+
 	public static String tableName = "dictionary_code";
 	
 	@Autowired
@@ -66,7 +67,7 @@ public class DictionaryCodeUtil {
 		return resultMap;
 	}
 	
-	public static Map<String, Object> getCodeAll(){
+	public static Map<String, Object> getCodeMap() {
 		return codeMap;
 	}
 	

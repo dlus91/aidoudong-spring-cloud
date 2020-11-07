@@ -66,7 +66,7 @@ public class DictionaryCodeUtil {
 		return resultMap;
 	}
 	
-	public static Map<String, Object> getCodeAll(){
+	public static Map<String, Object> getCodeMap() {
 		return codeMap;
 	}
 	
