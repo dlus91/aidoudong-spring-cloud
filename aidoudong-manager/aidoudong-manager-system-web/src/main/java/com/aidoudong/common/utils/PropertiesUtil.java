@@ -10,13 +10,11 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
 
-public class PropertiesUtil {
+public final class PropertiesUtil {
 	
-	static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
-
+	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 	private static final Properties errorCodeEnProperties;
 	private static final Properties sensitiveCodeProperties;
-
 	static{
 		errorCodeEnProperties = PropertiesUtil.getProperties("config/application-errorCodeEn.properties");
 		sensitiveCodeProperties = PropertiesUtil.getProperties("config/application-sensitiveCode.properties");

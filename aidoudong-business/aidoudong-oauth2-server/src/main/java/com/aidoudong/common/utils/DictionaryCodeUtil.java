@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class DictionaryCodeUtil {
+public final class DictionaryCodeUtil {
 	
-	static Logger logger = LoggerFactory.getLogger(DictionaryCodeUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(DictionaryCodeUtil.class);
 	private static Map<String, Object> codeMap = new HashMap<String,Object>();
-	public static String tableName = "dictionary_code";
+	private static final String tableName = "dictionary_code";
 	
 	@Autowired
 	@Qualifier("oauth2DataSource")

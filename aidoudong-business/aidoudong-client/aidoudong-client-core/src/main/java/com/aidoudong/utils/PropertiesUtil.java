@@ -9,7 +9,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import java.io.IOException;
 import java.util.Properties;
 
-public class PropertiesUtil {
+public final class PropertiesUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 

@@ -3,7 +3,7 @@ package com.aidoudong.common.utils;
 import com.aidoudong.common.exception.BussinessException;
 import org.springframework.lang.Nullable;
 
-public class AssertUtil {
+public final class AssertUtil {
 
 	public static void isNull(@Nullable Object object, String message) {
 		if (object != null) {
