@@ -9,17 +9,18 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import java.io.IOException;
 import java.util.Properties;
 
-public class SensitiveCodeUtil {
+public class PropertiesUtil {
 	
-	static Logger logger = LoggerFactory.getLogger(SensitiveCodeUtil.class);
+	static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
 	private static Properties sensitiveCodeProperties = null;
 
 	static{
-		sensitiveCodeProperties = SensitiveCodeUtil.getProperties("application-sensitiveCode.properties");
+		sensitiveCodeProperties = PropertiesUtil.getProperties("application-sensitiveCode.properties");
 	}
 
-
+	//the class is not instanll
+	private PropertiesUtil() { }
 
 	public static Properties getProperties(String location){
 		Properties props = null;

@@ -17,7 +17,10 @@ import java.io.InputStreamReader;
 @SpringBootApplication
 public class ManagerApplicationApp implements WebMvcConfigurer {
 
-    public static void main(String[] args) {
+	InputStream is = null;
+	BufferedReader br = null;
+
+    public static void main(String[] args) throws IOException {
 		new SpringApplicationBuilder(ManagerApplicationApp.class).run(args);
 //		ProcessHandle.Info javaInfo = ProcessHandle.current().info();
 //		System.out.println("java info "+javaInfo.toString());
@@ -28,29 +31,19 @@ public class ManagerApplicationApp implements WebMvcConfigurer {
 
 	}
 
-    private static void printJdkVersionInfo(String javaPath) {
-		InputStream is = null;
-		BufferedReader br = null;
-        try {
-            ProcessBuilder pb = new ProcessBuilder(javaPath, "-version");
-            Process ps = pb.start();
-            is = ps.getErrorStream();
-            br = new BufferedReader(new InputStreamReader(is));
-            br.lines().forEach(str -> {
+    private static void printJdkVersionInfo(String javaPath) throws IOException {
+		ProcessBuilder pb = new ProcessBuilder(javaPath, "-version");
+		Process ps = pb.start();
+		try(
+			InputStream is = ps.getErrorStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		){
+			br.lines().forEach(str -> {
 				String s = str;
 				System.out.println(s);
-            });
-//            int exitCode = ps.waitFor();
-//            System.out.println(exitCode);
-        } catch (Exception e) {
-			System.err.println("未指定jdk版本");
-        } finally {
-			try {
-				is.close();
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
     }
 

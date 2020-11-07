@@ -1,7 +1,5 @@
 package com.aidoudong.common.utils;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 @Component
 public class DictionaryCodeUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(DictionaryCodeUtil.class);
-	
 	private static Map<String, Object> codeMap;
-	private static final String jsonObjectType = "JSONObject";
-	private static final String jsonArrayType = "JSONOArray";
-	private static final String pageMybatisPlusType = "MybatisPlusPage";
-	private static final String pageJpaType = "JpaPage";
-	private static final String jsonNoknowType = "unknow";
-	private static final String resultConvertCode = "code";
-	
 	public static String tableName = "dictionary_code";
 	
 	@Autowired
@@ -77,83 +66,16 @@ public class DictionaryCodeUtil {
 		return resultMap;
 	}
 	
-	public Map<String, Object> getCodeAll(){
+	public static Map<String, Object> getCodeAll(){
 		return codeMap;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String getValue(String code,String valueCode) {
+	public static String getValue(String code,String valueCode) {
 		Map<String, String> simpleCodeMap = (HashMap<String, String>) codeMap.get(code);
 		if(simpleCodeMap == null || simpleCodeMap.isEmpty()){ return ""; }
 		String resultValue = simpleCodeMap.get(valueCode);
 		return null == resultValue ? "" : resultValue;
 	}
-	
-	public Object codeCovert(Object data,Map<String, String> code) {
-		String type = this.validResultType(data);
-		if(pageMybatisPlusType.equals(type)) { // mybatis-plus
-			JSONObject pageJson = (JSONObject) JSONObject.toJSON(data);
-			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(pageJson.get("records"));
-			Iterator<Object> iterator = jsonArray.iterator();
-	        while (iterator.hasNext()){
-	        	JSONObject jsonObject = (JSONObject) iterator.next();
-	        	this.handlerResultCode(jsonObject,code);
-	        }
-	        data = jsonArray;
-		}else if(pageJpaType.equals(type)) { // jpa
-			JSONObject pageJson = (JSONObject) JSONObject.toJSON(data);
-			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(pageJson.get("content"));
-			Iterator<Object> iterator = jsonArray.iterator();
-	        while (iterator.hasNext()){
-	        	JSONObject jsonObject = (JSONObject) iterator.next();
-	        	this.handlerResultCode(jsonObject,code);
-	        }
-	        data = jsonArray;
-		}else if(jsonArrayType.equals(type)) { // array
-			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(data);
-			Iterator<Object> iterator = jsonArray.iterator();
-	        while (iterator.hasNext()){
-	        	JSONObject jsonObject = (JSONObject) iterator.next();
-	        	this.handlerResultCode(jsonObject,code);
-	        }
-	        data = jsonArray;
-		}else if(jsonObjectType.equals(type)){ // map
-			JSONObject jsonObject = (JSONObject) JSONObject.toJSON(data);
-			this.handlerResultCode(jsonObject,code);
-			data = jsonObject;
-		}
-		return data;
-	}
-	
-	private void handlerResultCode(JSONObject json,Map<String, String> codeMap) {
-		for (Map.Entry<String, String> entry : codeMap.entrySet()) {
-			if(json.containsKey(entry.getKey())){
-				if(!json.containsKey(resultConvertCode)) {
-					json.put(resultConvertCode, new JSONObject());
-				}
-				JSONObject codeJson = (JSONObject) json.get(resultConvertCode);
-				codeJson.put(entry.getKey(), this.getValue(entry.getValue(), json.getString(entry.getKey())));
-			}
-		}
-	}
-	
-	private String validResultType(Object object) {
-		if(object instanceof com.baomidou.mybatisplus.extension.plugins.pagination.Page) {
-			return pageMybatisPlusType;
-		}else if(object instanceof org.springframework.data.domain.Page) {
-			return pageJpaType;
-		}
-		String resultStr = jsonNoknowType;
-		String fristStr = object.toString().trim().split("")[0];
-		if("[".equals(fristStr)) {
-			resultStr = jsonArrayType;
-		}else if("{".equals(fristStr)) {
-			resultStr = jsonObjectType;
-		}else {
-			resultStr = jsonObjectType;
-		}
-		return resultStr;
-	}
-
 	
 }
