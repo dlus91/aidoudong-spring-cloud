@@ -54,7 +54,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 				data,
 				SerializeConfig.globalInstance,
 				serializeFilters,
-				data.getDateFomater(),
+				data.getDateFormater(),
 				JSONObject.DEFAULT_GENERATE_FEATURE,
 				resultWriteDateUserDateFormat,
 				prettyFormat,
