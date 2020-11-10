@@ -9,7 +9,7 @@ import java.util.Map;
  * @Author: dlus91
  * @Date: 2020/10/27 21:39
  */
-public class ResultViewBuilder extends AbstractResultView {
+public final class ResultViewBuilder extends AbstractResultView {
 
     private ResultViewBuilder() {
     }

@@ -1,10 +1,13 @@
 package aidoudong.common.resultview;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class AbstractResultView {
 
@@ -48,7 +51,7 @@ public abstract class AbstractResultView {
 	}
 
 	@Transient
-	public String getDateFomater() {
+	public String getDateFormater() {
 		return dateFormater;
 	}
 	@Transient
@@ -56,4 +59,32 @@ public abstract class AbstractResultView {
 		return codeMap;
 	}
 
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AbstractResultView)) return false;
+		AbstractResultView that = (AbstractResultView) o;
+		return getCode() == that.getCode() &&
+				Objects.equals(getMessage(), that.getMessage()) &&
+				Objects.equals(getData(), that.getData()) &&
+				Objects.equals(getDateFormater(), that.getDateFormater()) &&
+				Objects.equals(getCodeMap(), that.getCodeMap());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getCode(), getMessage(), getData(), getDateFormater(), getCodeMap());
+	}
+
+	@Override
+	public String toString() {
+		return "ResultView{" +
+				"code=" + code +
+				", message='" + message + '\'' +
+				", data=" + data +
+				", dateFormater='" + dateFormater + '\'' +
+				", codeMap=" + codeMap +
+				'}';
+	}
 }
