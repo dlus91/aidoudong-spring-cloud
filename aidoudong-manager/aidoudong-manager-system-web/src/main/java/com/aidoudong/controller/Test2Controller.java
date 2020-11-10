@@ -1,6 +1,6 @@
 package com.aidoudong.controller;
 
-import com.aidoudong.common.result.FastJsonResultView;
+import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
@@ -24,7 +24,7 @@ public class Test2Controller {
 	@Autowired
 	private ClientUserService clientUserService;
 	@Autowired
-	private FastJsonResultView fastJsonResultView;
+	private BaseResultView fastJsonResultView;
 	
 	@GetMapping("/page")
 	public String page(Page<ClientUser> page,ClientUser clientUser) {

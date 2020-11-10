@@ -1,6 +1,6 @@
 package com.aidoudong.controller;
 
-import com.aidoudong.common.result.FastJsonResultView;
+import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.common.utils.DictionaryCodeUtil;
 import com.aidoudong.entity.system.SysUser;
@@ -27,7 +27,7 @@ public class MainController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
-	private FastJsonResultView fastJsonResultView;
+	private BaseResultView fastJsonResultView;
 	@Autowired
 	private DictionaryCodeUtil dictionaryCodeUtil;
 	
