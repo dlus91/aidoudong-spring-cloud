@@ -1,7 +1,6 @@
 package com.aidoudong.common.result;
 
 import aidoudong.common.resultview.AbstractFastJsonResultView;
-import aidoudong.common.resultview.AbstractResultView;
 import com.aidoudong.common.utils.DictionaryCodeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -18,7 +17,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SuppressWarnings("unchecked")
 @Component
 public class FastJsonResultView extends AbstractFastJsonResultView {
 
@@ -45,23 +43,25 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 	private static final String jsonNoknowType = "unknow";
 	private static final String resultConvertCode = "code";
 
-	@Override
-	public String ok(AbstractResultView data) {
+	/**
+	 * @implSpec 实现了默认json字符串输出，并且提供一致性时间格式的转换，并且提供了字典类型转换
+	 * 这里允许在不破坏基础功能的基础上自行扩展，如敏感字转换等
+	 * @param data
+	 * @return
+	 */
+	public String ok(ResultViewBuilder data) {
 		return super.ok(data);
 	}
 
-	@Override
-	public String include(AbstractResultView data, String[] includeProperties) {
+	public String include(ResultViewBuilder data, String[] includeProperties) {
 		return super.include(data, includeProperties);
 	}
 
-	@Override
-	public String exclude(AbstractResultView data, String[] excludeProperties) {
+	public String exclude(ResultViewBuilder data, String[] excludeProperties) {
 		return super.exclude(data, excludeProperties);
 	}
 
-	@Override
-	public String fail(AbstractResultView data) {
+	public String fail(ResultViewBuilder data) {
 		return super.fail(data);
 	}
 

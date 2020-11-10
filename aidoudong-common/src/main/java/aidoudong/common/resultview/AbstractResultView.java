@@ -6,10 +6,7 @@ import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Map;
 
-/**
- * 该类不提供set方法，而是用建筑者模式提供流式编码风格，避免混乱的情况出现
- */
-public abstract class AbstractResultView<T> {
+public abstract class AbstractResultView {
 
 	private static final long serialVersionUID = 4325431521204380876L;
 
@@ -24,62 +21,18 @@ public abstract class AbstractResultView<T> {
 
 	public AbstractResultView() {}
 
-	public AbstractResultView(int code, String message, Object data) {
+	public AbstractResultView(int code, String message,
+									Object data, String dateFormater,
+									Map<String, String> codeMap){
 		this.code = code;
-		this.message = message;
+		this.message = convertMessage(message);
 		this.data = data;
-	}
-
-	public AbstractResultView build(int code, String message, Object data){
-		this.code = code;
-		this.message = message;
-		this.data = data;
-		return this;
-	}
-
-	public AbstractResultView dateFormater(String dateFormater){
 		this.dateFormater = dateFormater;
-		return this;
-	}
-
-	public AbstractResultView codeMap(Map<String, String> codeMap){
 		this.codeMap = codeMap;
-		return this;
-	}
-
-	public AbstractResultView success(){
-		this.code = 200;
-		this.message = convertMessage(SUCCESS_MESSAGE);
-		return this;
-	}
-
-	public AbstractResultView success(Object data){
-		this.code = 200;
-		this.message = convertMessage(SUCCESS_MESSAGE);
-		this.data = data;
-		return this;
-	}
-
-	public AbstractResultView fail(){
-		this.code = 500;
-		this.message = convertMessage(FAIL_MESSAGE);
-		return this;
-	}
-
-	public AbstractResultView fail(String message){
-		this.code = 500;
-		this.message = convertMessage(message);
-		return this;
-	}
-
-	public AbstractResultView fail(int code, String message){
-		this.code = code;
-		this.message = convertMessage(message);
-		return this;
 	}
 
 	public abstract String convertMessage(String message);
-	
+
 	public String outPutData() {
 		return JSONObject.toJSONString(this);
 	}

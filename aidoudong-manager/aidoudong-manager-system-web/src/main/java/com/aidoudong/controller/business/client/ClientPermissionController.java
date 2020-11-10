@@ -1,7 +1,7 @@
 package com.aidoudong.controller.business.client;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.entity.business.ClientPermission;
 import com.aidoudong.service.business.client.ClientPermissionService;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class ClientPermissionController {
 	public String list() {
 		// Mybatis-plus已经提供的，查询SysPermission表中的所有记录
 		List<ClientPermission> list = clientPermissionService.list();
-		return fastJsonResultView.ok(new ResultView().success(list));
+		return fastJsonResultView.ok(ResultViewBuilder.success(list));
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class ClientPermissionController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		clientPermissionService.deleteById(id);
-		return fastJsonResultView.ok(new ResultView().success());
+		return fastJsonResultView.ok(ResultViewBuilder.success());
 	}
 	
 	

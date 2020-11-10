@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +29,7 @@ public class TestControler {
 	
 	@GetMapping("/findAll/include")
 	public String include() {
-		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
+		ResultViewBuilder resultView = ResultViewBuilder.of(200, ResultViewBuilder.SUCCESS_MESSAGE,productServiceImpl.findAll());
 		return fastJsonResultView.include(
 				resultView,
 				new String[] {"pname","type","price"});
@@ -39,15 +39,14 @@ public class TestControler {
 	public String include2() {
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("type", "product_type");
-		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
-		resultView.codeMap(map);
+		ResultViewBuilder resultView = ResultViewBuilder.of(200, ResultViewBuilder.SUCCESS_MESSAGE,productServiceImpl.findAll(),map);
 		return fastJsonResultView.include(resultView,
 				new String[] {"pname","type","price","createTime"});
 	}
 	
 	@GetMapping("/findAll/exclude")
 	public String exclude() {
-		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
+		ResultViewBuilder resultView = ResultViewBuilder.of(200, ResultViewBuilder.SUCCESS_MESSAGE,productServiceImpl.findAll());
 		return fastJsonResultView.exclude(
 				resultView,
 				new String[] {"price","createTime"});
@@ -55,8 +54,7 @@ public class TestControler {
 	
 	@GetMapping("/findAll/exclude2")
 	public String exclude2() {
-		ResultView resultView = new ResultView(200,ResultView.SUCCESS_MESSAGE,productServiceImpl.findAll());
-		resultView.dateFormater("yyyy-MM-dd");
+		ResultViewBuilder resultView = ResultViewBuilder.of(200, ResultViewBuilder.SUCCESS_MESSAGE,productServiceImpl.findAll(),"yyyy-MM-dd");
 		return fastJsonResultView.exclude(
 				resultView,
 				new String[] {"price"});

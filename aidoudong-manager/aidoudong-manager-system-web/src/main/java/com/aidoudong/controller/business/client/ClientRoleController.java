@@ -1,7 +1,7 @@
 package com.aidoudong.controller.business.client;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.entity.business.ClientRole;
 import com.aidoudong.service.business.client.ClientRoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +37,7 @@ public class ClientRoleController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<ClientRole> page, ClientRole sysRole) {
-		return fastJsonResultView.ok(new ResultView().success(clientRoleService.selectPage(page, sysRole)));
+		return fastJsonResultView.ok(ResultViewBuilder.success(clientRoleService.selectPage(page, sysRole)));
 	}
 	
 	/**
@@ -79,6 +79,6 @@ public class ClientRoleController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		clientRoleService.deleteById(id);
-		return fastJsonResultView.ok(new ResultView().success());
+		return fastJsonResultView.ok(ResultViewBuilder.success());
 	}
 }

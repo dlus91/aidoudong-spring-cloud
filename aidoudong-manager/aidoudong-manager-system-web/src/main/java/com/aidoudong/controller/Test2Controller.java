@@ -1,7 +1,7 @@
 package com.aidoudong.controller;
 
-import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.FastJsonResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,14 +24,14 @@ public class Test2Controller {
 	@Autowired
 	private ClientUserService clientUserService;
 	@Autowired
-	private BaseResultView fastJsonResultView;
+	private FastJsonResultView fastJsonResultView;
 	
 	@GetMapping("/page")
 	public String page(Page<ClientUser> page,ClientUser clientUser) {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
 		return fastJsonResultView.ok(
-				new ResultView().success(clientUserService.selectPage(page, user)));
+				ResultViewBuilder.success(clientUserService.selectPage(page, user)));
 	}
 	
 	@GetMapping("/page/include")
@@ -39,7 +39,7 @@ public class Test2Controller {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
 		return fastJsonResultView.include(
-				new ResultView().success(clientUserService.selectPage(page, user)),
+				ResultViewBuilder.success(clientUserService.selectPage(page, user)),
 				new String[] {"id","username","nickName","mobile"});
 	}
 	
@@ -52,16 +52,16 @@ public class Test2Controller {
 		map.put("accountNonExpired", "effective_type");
 		map.put("accountNonLocked", "effective_type");
 		map.put("enabled", "effective_type");
-		ResultView resultView = new ResultView(200,"成功",clientUserService.selectPage(page, user));
+		ResultViewBuilder resultView = ResultViewBuilder.of(200,"成功",clientUserService.selectPage(page, user),map);
 		return fastJsonResultView.include(
-				resultView.codeMap(map),
+				resultView,
 				new String[] {"id","username","nickName","mobile","email","accountNonExpired","accountNonLocked","enabled"});
 //				new String[] {"id"});
 	}
 	
 	@GetMapping("/fail")
 	public String fail() {
-		return fastJsonResultView.fail(new ResultView().fail("ERROR_EXIST"));
+		return fastJsonResultView.fail(ResultViewBuilder.fail("ERROR_EXIST"));
 	}
 	
 }

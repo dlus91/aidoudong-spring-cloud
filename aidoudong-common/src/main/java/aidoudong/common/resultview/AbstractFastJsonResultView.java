@@ -16,9 +16,6 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 	private static final SerializerFeature resultNullFormat = SerializerFeature.WriteMapNullValue;
 	private static final SerializerFeature prettyFormat = SerializerFeature.PrettyFormat;
 
-	private String defaultDateFomater = "yyyy-MM-dd HH:mm:ss";
-
-
 	@Override
 	public String ok(AbstractResultView data) {
 		SerializeFilter[] serializeFilters = null;
@@ -53,23 +50,15 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 	}
 
 	private String jsonFormater(AbstractResultView data, SerializeFilter[] serializeFilters){
-		String dateFomater = validDataFormat(data.getDateFomater());
 		return JSONObject.toJSONString(
 				data,
 				SerializeConfig.globalInstance,
 				serializeFilters,
-				dateFomater,
+				data.getDateFomater(),
 				JSONObject.DEFAULT_GENERATE_FEATURE,
 				resultWriteDateUserDateFormat,
 				prettyFormat,
 				resultNullFormat);
-	}
-
-	private String validDataFormat(String dateFomater){
-		if(dateFomater == null || "".equals(dateFomater)){
-			return defaultDateFomater;
-		}
-		return dateFomater;
 	}
 
 	private SerializeFilter[] validCodeMap(Map<String, String> codeMap){

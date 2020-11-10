@@ -1,7 +1,7 @@
 package com.aidoudong.controller.system;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.entity.system.SysRole;
 import com.aidoudong.entity.system.SysUser;
 import com.aidoudong.service.system.SysRoleService;
@@ -51,7 +51,7 @@ public class SysUserController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<SysUser> page,SysUser sysUser) {
-		return fastJsonResultView.ok(new ResultView().success(sysUserService.selectPage(page, sysUser)));
+		return fastJsonResultView.ok(ResultViewBuilder.success(sysUserService.selectPage(page, sysUser)));
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class SysUserController {
 	public String deleteById(@PathVariable Long id) {
 		// 逻辑删除，只做更新
 		sysUserService.deleteById(id);
-		return fastJsonResultView.ok(new ResultView().success());
+		return fastJsonResultView.ok(ResultViewBuilder.success());
 	}
 	
 	

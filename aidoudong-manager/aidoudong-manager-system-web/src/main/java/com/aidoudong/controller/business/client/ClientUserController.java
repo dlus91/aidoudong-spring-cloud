@@ -3,7 +3,7 @@ package com.aidoudong.controller.business.client;
 import java.util.List;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class ClientUserController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<ClientUser> page,ClientUser clientUser) {
-		return fastJsonResultView.ok(new ResultView().success(clientUserService.selectPage(page, clientUser)));
+		return fastJsonResultView.ok(ResultViewBuilder.success(clientUserService.selectPage(page, clientUser)));
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class ClientUserController {
 	public String deleteById(@PathVariable Long id) {
 		// 逻辑删除，只做更新
 		clientUserService.deleteById(id);
-		return fastJsonResultView.ok(new ResultView().success());
+		return fastJsonResultView.ok(ResultViewBuilder.success());
 	}
 	
 	

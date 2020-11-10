@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +38,7 @@ public class ProductControler {
 //	@PreAuthorize("#oauth2.hasScope('all')")
 	public String list() {
 		tracer.currentSpan().tag("name", "product-server -> product1-server");
-		ResultView resultView = JSONObject.parseObject(testFeignClient.findByIdJson(),ResultView.class);
+		ResultViewBuilder resultView = JSONObject.parseObject(testFeignClient.findByIdJson(), ResultViewBuilder.class);
 		List<String> resutList = (List<String>) resultView.getData();
 		List<String> list = new ArrayList<String>();
 		list.add("眼界1");
@@ -47,23 +47,23 @@ public class ProductControler {
 		
 		resutList.addAll(list);
 		
-		return fastJsonResultView.ok(new ResultView().success(resutList));
+		return fastJsonResultView.ok(ResultViewBuilder.success(resutList));
 	}
 	
 	@GetMapping("/id/{id}")
 	public String getById(@PathVariable(required = true) Long id) {
-		return fastJsonResultView.ok(new ResultView().success(productServiceImpl.findById(id)));
+		return fastJsonResultView.ok(ResultViewBuilder.success(productServiceImpl.findById(id)));
 	}
 	
 	@GetMapping("/findAll")
 	public String findAll() {
-		return fastJsonResultView.ok(new ResultView().success(productServiceImpl.findAll()));
+		return fastJsonResultView.ok(ResultViewBuilder.success(productServiceImpl.findAll()));
 	}
 	
 	@PostMapping("/update")
 	public String update(Product product) {
 		productServiceImpl.update(product);
-		return fastJsonResultView.ok(new ResultView().success());
+		return fastJsonResultView.ok(ResultViewBuilder.success());
 	}
 	
 }
