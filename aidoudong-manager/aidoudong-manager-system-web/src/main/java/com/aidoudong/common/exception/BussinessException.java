@@ -7,13 +7,11 @@ public class BussinessException extends RuntimeException{
 	private int code;
 	private String message;
 
-	@SuppressWarnings("unused")
 	public BussinessException(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
-	@SuppressWarnings("unused")
 	public BussinessException(String message) {
 		this.message = message;
 	}

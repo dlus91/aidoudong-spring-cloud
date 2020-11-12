@@ -64,7 +64,6 @@ public final class DictionaryCodeUtil {
 		return resultMap;
 	}
 
-	@SuppressWarnings("unused")
 	public static Map<String, Map<String,String>> getCodeMap() {
 		return codeMap;
 	}

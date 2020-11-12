@@ -30,7 +30,6 @@ public abstract class AbstractResultView {
 		this.codeMap = codeMap;
 	}
 
-	@SuppressWarnings("unused")
 	public String outPutData() {
 		return JSONObject.toJSONString(this);
 	}

@@ -4,7 +4,6 @@ package aidoudong.common.resultview;
  * @Author: dlus91
  * @Date: 2020/8/21 14:37
  */
-@SuppressWarnings("unused")
 public interface BaseResultView {
 
     String ok(AbstractResultView data);

@@ -29,7 +29,6 @@ import com.aidoudong.oauth2.server.service.CustomUserDetailsService;
 @EnableAuthorizationServer //开启了认证服务器
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
 
-	@SuppressWarnings("unused")
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -46,8 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Bean
 	public ClientDetailsService jdbcClientDetailsService() {
-		JdbcClientDetailsService jdbcClientDetailsService = new JdbcClientDetailsService(dataSource);
-		return jdbcClientDetailsService;
+		return new JdbcClientDetailsService(dataSource);
 	}
 	
 	/**
@@ -73,7 +71,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	 * 关于认证服务器端点配置
 	 */
 	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 		// password 需要这个AuthenticationManager实例
 		endpoints.authenticationManager(authenticationManager);
 		// 刷新令牌时需要使用
@@ -93,7 +91,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	 * 令牌端点的安全配置
 	 */
 	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+	public void configure(AuthorizationServerSecurityConfigurer security) {
 		// 所有人都可访问 /oauth/check_token，默认拒绝访问 
 		security.checkTokenAccess("isAuthenticated()");
 		// 所有人都可访问 /oauth/token_key 后面要获取公钥，默认拒绝访问

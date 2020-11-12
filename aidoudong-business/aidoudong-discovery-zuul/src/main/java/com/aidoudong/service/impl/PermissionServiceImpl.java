@@ -19,31 +19,27 @@ public class PermissionServiceImpl implements PermissionService{
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private AntPathMatcher antPathMatcher = new AntPathMatcher();
+	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
 		Object principal = authentication.getPrincipal();
         String requestUrl = request.getRequestURI();
         logger.info("requestUrl:{}",requestUrl);
+        @SuppressWarnings("unchecked")
         List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
-        boolean hasPermission = false;
 
         if(principal != null){
             if(CollectionUtils.isEmpty(grantedAuthorityList)){
-                return hasPermission;
+                return false;
             }
             for(SimpleGrantedAuthority authority:grantedAuthorityList){
                 if (antPathMatcher.match(authority.getAuthority(),requestUrl)){
-                    hasPermission = true;
-                    break;
+                    return true;
                 }
             }
         }
-        
-//        return hasPermission;
-        return true;
+        return false;
 	}
 	
 }

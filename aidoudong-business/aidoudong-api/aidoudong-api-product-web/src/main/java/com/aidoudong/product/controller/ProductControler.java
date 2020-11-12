@@ -32,26 +32,26 @@ public class ProductControler {
 	@Autowired
 	private Tracer tracer;
 	
-	@SuppressWarnings("unchecked")
 	@GetMapping("/list")
 //	@PreAuthorize("hasAuthority('sys:role:list')")
 //	@PreAuthorize("#oauth2.hasScope('all')")
 	public String list() {
 		tracer.currentSpan().tag("name", "product-server -> product1-server");
 		ResultViewBuilder resultView = JSONObject.parseObject(testFeignClient.findByIdJson(), ResultViewBuilder.class);
-		List<String> resutList = (List<String>) resultView.getData();
-		List<String> list = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<String> resultList = (List<String>) resultView.getData();
+		List<String> list = new ArrayList<>();
 		list.add("眼界1");
 		list.add("双肩包1");
 		list.add("衬衫1");
 		
-		resutList.addAll(list);
+		resultList.addAll(list);
 		
-		return fastJsonResultView.ok(ResultViewBuilder.success(resutList));
+		return fastJsonResultView.ok(ResultViewBuilder.success(resultList));
 	}
 	
 	@GetMapping("/id/{id}")
-	public String getById(@PathVariable(required = true) Long id) {
+	public String getById(@PathVariable() Long id) {
 		return fastJsonResultView.ok(ResultViewBuilder.success(productServiceImpl.findById(id)));
 	}
 	
