@@ -18,8 +18,6 @@ public interface SysUserMapper extends BaseMapper<SysUser>{
 	
 	/**
 	 * 通过用户id删除用户角色表中的所有记录
-	 * @param userId
-	 * @return
 	 */
 	boolean deleteUserRoleByUserId(@Param("userId") Long userId);
 	
@@ -27,7 +25,6 @@ public interface SysUserMapper extends BaseMapper<SysUser>{
 	 * 保存用户与角色关系表数据
 	 * @param userId 用户id
 	 * @param roleIds 角色ids
-	 * @return
 	 */
 	boolean saveUserRoleByUserId(@Param("userId") Long userId, @Param("roleIds") List<Long> roleIds);
 	

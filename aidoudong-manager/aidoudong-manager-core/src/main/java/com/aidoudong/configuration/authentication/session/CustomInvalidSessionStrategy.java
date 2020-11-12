@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aidoudong.properties.SimpleResultView;
-import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ import org.springframework.security.web.session.InvalidSessionStrategy;
 public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	private SessionRegistry sessionRegistry;
+	private final SessionRegistry sessionRegistry;
 	
 	public CustomInvalidSessionStrategy(SessionRegistry sessionRegistry) {
 		super();
@@ -31,7 +30,7 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 	}
 
 	@Override
-	public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 因为这里是session超时后的操作，request.getSession是获取当前请求里的session，这里session已经超时就没有了，所以这里会创建一个新的sessionId返回
 		// request.getSession(true) 默认是true，表示没有session就创建一个新的。传入false是表示当前没有session就返回一个 null，不会创建一个新的session返回
 		logger.info("CustomInvalidSessionStrategy.getSession().getId(): "+request.getSession().getId());
@@ -44,7 +43,7 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 		cancelCookie(request,response);
 
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(new SimpleResultView().build(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录",null).outPutData());
+		response.getWriter().write(SimpleResultView.fail(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录").outPutData());
 		
 	}
 	

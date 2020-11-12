@@ -12,7 +12,7 @@ import java.util.Set;
 
 public final class PropertiesUtil {
 	
-	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 	private static final Properties errorCodeEnProperties;
 	private static final Properties sensitiveCodeProperties;
 	static{

@@ -26,7 +26,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
 	@Override
 	public boolean deleteById(Long id) {
-		LambdaQueryWrapper<SysPermission> queryWrapper = new LambdaQueryWrapper<SysPermission>();
+		LambdaQueryWrapper<SysPermission> queryWrapper = new LambdaQueryWrapper<>();
 		queryWrapper.eq(SysPermission::getParentId, id).or().eq(SysPermission::getId, id);
 		baseMapper.delete(queryWrapper);
 		return true;

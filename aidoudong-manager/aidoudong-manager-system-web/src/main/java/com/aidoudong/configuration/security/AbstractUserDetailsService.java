@@ -28,7 +28,6 @@ public abstract class AbstractUserDetailsService implements UserDetailsService{
 	/**
 	 * 这个方法交给子类去实现，查询用户信息
 	 * @param usernameOrMobile 用户名/手机
-	 * @return
 	 */
 	public abstract SysUser findSysUser(String usernameOrMobile);
 	

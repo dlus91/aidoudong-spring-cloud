@@ -8,14 +8,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.aidoudong.common.result.ResultViewBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.session.InvalidSessionStrategy;
-
-import com.aidoudong.common.ResultView;
 
 /**
  * 当session失效后的处理逻辑
@@ -43,10 +42,8 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 		// 要将浏览器中的cookie的jessionid删除
 		cancelCookie(request,response);
 		
-		ResultView resultView = 
-				ResultView.build(HttpStatus.UNAUTHORIZED.value(), "登录已超时,请重新登录");
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(resultView.toJsonString());
+		response.getWriter().write(ResultViewBuilder.fail(HttpStatus.UNAUTHORIZED.value(), "登录已超时,请重新登录").outPutData());
 		
 	}
 	

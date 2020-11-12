@@ -4,14 +4,16 @@ public class BussinessException extends RuntimeException{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer code;
+	private int code;
 	private String message;
 
-	public BussinessException(Integer code, String message) {
+	@SuppressWarnings("unused")
+	public BussinessException(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
+	@SuppressWarnings("unused")
 	public BussinessException(String message) {
 		this.message = message;
 	}

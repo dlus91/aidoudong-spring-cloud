@@ -10,8 +10,6 @@ import com.alibaba.fastjson.serializer.ValueFilter;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,15 +38,8 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 	private static final String jsonArrayType = "JSONOArray";
 	private static final String pageMybatisPlusType = "MybatisPlusPage";
 	private static final String pageJpaType = "JpaPage";
-	private static final String jsonNoknowType = "unknow";
 	private static final String resultConvertCode = "code";
 
-	/**
-	 * @implSpec 实现了默认json字符串输出，并且提供一致性时间格式的转换，并且提供了字典类型转换
-	 * 这里允许在不破坏基础功能的基础上自行扩展，如敏感字转换等
-	 * @param data
-	 * @return
-	 */
 	public String ok(ResultViewBuilder data) {
 		return super.ok(data);
 	}
@@ -67,7 +58,7 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 
 	@Override
 	public String[] getIfPageInfoIncludeProperties(Object data, String[] includeProperties) {
-		List<String> resultViewIncludePropertiesList = new ArrayList<String>();
+		List<String> resultViewIncludePropertiesList;
 		if(data instanceof org.springframework.data.domain.Page) {
 			resultViewIncludePropertiesList = Stream.of(resultViewJpaPageIncludeProperties).collect(Collectors.toList());
 		}else if(data instanceof com.baomidou.mybatisplus.extension.plugins.pagination.Page){
@@ -76,34 +67,31 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 			resultViewIncludePropertiesList = Stream.of(resultViewIncludeProperties).collect(Collectors.toList());
 		}
 		CollectionUtils.addAll(resultViewIncludePropertiesList, includeProperties);
-		return resultViewIncludePropertiesList.stream().toArray(String[]::new);
+		return resultViewIncludePropertiesList.toArray(new String[0]);
 	}
 
 	@Override
 	public SerializeFilter[] getResultViewValueFilter(Map<String, String> codeMap) {
 		if(codeMap == null || codeMap.isEmpty()) return null;
-		ValueFilter valueFilter = new ValueFilter() {
-			@Override
-            public Object process(Object object, String name, Object value) {
-                if("data".equals(name)){
-                	if(null == value) {
-                		return value;
-                	}
-                	if(value instanceof org.springframework.data.domain.Page){
-            			JSONObject jsonPage = (JSONObject) JSON.toJSON(value);
-            			jsonPage.put("content", (List<?>) codeCovert(jsonPage.get("content"),codeMap));
-            			value = jsonPage;
-            		}else if(value instanceof com.baomidou.mybatisplus.extension.plugins.pagination.Page){
-            			JSONObject jsonPage = (JSONObject) JSON.toJSON(value);
-            			jsonPage.put("records", (List<?>) codeCovert(jsonPage.get("records"),codeMap));
-            			value = jsonPage;
-                	}else{
-            			value = codeCovert(value,codeMap);
-            		}
-                }
-                return value;
-            }
-        };
+		ValueFilter valueFilter = (object, name, value) -> {
+			if("data".equals(name)){
+				if(null == value) {
+					return value;
+				}
+				if(value instanceof org.springframework.data.domain.Page){
+					JSONObject jsonPage = (JSONObject) JSON.toJSON(value);
+					jsonPage.put("content", codeCovert(jsonPage.get("content"),codeMap));
+					value = jsonPage;
+				}else if(value instanceof com.baomidou.mybatisplus.extension.plugins.pagination.Page){
+					JSONObject jsonPage = (JSONObject) JSON.toJSON(value);
+					jsonPage.put("records", codeCovert(jsonPage.get("records"),codeMap));
+					value = jsonPage;
+				}else{
+					value = codeCovert(value,codeMap);
+				}
+			}
+			return value;
+		};
 		return new SerializeFilter[] {valueFilter};
 	}
 
@@ -112,27 +100,24 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 		if(pageMybatisPlusType.equals(type)) { // mybatis-plus
 			JSONObject pageJson = (JSONObject) JSONObject.toJSON(data);
 			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(pageJson.get("records"));
-			Iterator<Object> iterator = jsonArray.iterator();
-			while (iterator.hasNext()){
-				JSONObject jsonObject = (JSONObject) iterator.next();
-				this.handlerResultCode(jsonObject,code);
+			for (Object o : jsonArray) {
+				JSONObject jsonObject = (JSONObject) o;
+				this.handlerResultCode(jsonObject, code);
 			}
 			data = jsonArray;
 		}else if(pageJpaType.equals(type)) { // jpa
 			JSONObject pageJson = (JSONObject) JSONObject.toJSON(data);
 			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(pageJson.get("content"));
-			Iterator<Object> iterator = jsonArray.iterator();
-			while (iterator.hasNext()){
-				JSONObject jsonObject = (JSONObject) iterator.next();
-				this.handlerResultCode(jsonObject,code);
+			for (Object o : jsonArray) {
+				JSONObject jsonObject = (JSONObject) o;
+				this.handlerResultCode(jsonObject, code);
 			}
 			data = jsonArray;
 		}else if(jsonArrayType.equals(type)) { // array
 			JSONArray jsonArray = (JSONArray) JSONArray.toJSON(data);
-			Iterator<Object> iterator = jsonArray.iterator();
-			while (iterator.hasNext()){
-				JSONObject jsonObject = (JSONObject) iterator.next();
-				this.handlerResultCode(jsonObject,code);
+			for (Object o : jsonArray) {
+				JSONObject jsonObject = (JSONObject) o;
+				this.handlerResultCode(jsonObject, code);
 			}
 			data = jsonArray;
 		}else if(jsonObjectType.equals(type)){ // map
@@ -161,7 +146,7 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 		}else if(object instanceof org.springframework.data.domain.Page) {
 			return pageJpaType;
 		}
-		String resultStr = jsonNoknowType;
+		String resultStr;
 		String fristStr = object.toString().trim().split("")[0];
 		if("[".equals(fristStr)) {
 			resultStr = jsonArrayType;

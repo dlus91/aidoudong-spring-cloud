@@ -4,10 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aidoudong.properties.SimpleResultView;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,14 +32,14 @@ public class MobileLoginController {
 	
 	@GetMapping("/code/mobile")
 	@ResponseBody
-	public String smsCode(HttpServletRequest request,HttpServletResponse response) {
+	public String smsCode(HttpServletRequest request) {
 		// 1, 生成一个手机验证码
 		String code = RandomStringUtils.randomNumeric(4);
 		// 2, 将手机验证码保存到session中
 		request.getSession().setAttribute(SESSION_KEY, code);
 		// 3, 发送验证码到用户手机上
 		smsSend.sendSms(request.getParameter("mobile"), code);
-		return new SimpleResultView().success().outPutData();
+		return SimpleResultView.success().outPutData();
 	}
 	
 }

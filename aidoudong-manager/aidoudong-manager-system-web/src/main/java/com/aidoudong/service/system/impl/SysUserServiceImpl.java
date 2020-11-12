@@ -2,6 +2,7 @@ package com.aidoudong.service.system.impl;
 
 import java.util.Date;
 
+import com.aidoudong.common.utils.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		if(StringUtils.isEmpty(username)) {
 			return null;
 		}
-		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("username", username);
 		// baseMapper对应的SysUserMapper
 		return baseMapper.selectOne(queryWrapper);
@@ -40,7 +41,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		if(StringUtils.isEmpty(mobile)) {
 			return null;
 		}
-		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+		QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("mobile", mobile);
 		// baseMapper对应的SysUserMapper
 		return baseMapper.selectOne(queryWrapper);
@@ -68,8 +69,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	@Transactional("systemTransactionManager")
 	@Override
 	public boolean saveOrUpdate(SysUser entity) {
+		AssertUtil.notNull(entity,"保存失败");
 		// 如果传入的id为空，则为新增，则初始化密码
-		if(entity != null && entity.getId() == null) {
+		if(entity.getPassword() == null) {
 			entity.setPassword(PASSWORD_DEFAULT);
 		}
 		entity.setUpdateDate(new Date());

@@ -26,9 +26,7 @@ public class MenuAuthenticationSuccessListener implements AuthenticationSuccessL
 	
 	/**
 	 * 查询用户所拥有的权限菜单
-	 * @param request
-	 * @Param response
-	 * @Param authentication 当用户认证通过后，会将认证对象传入 
+	 * @Param authentication 当用户认证通过后，会将认证对象传入
 	 */
 	@Override
 	public void successListener(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -44,7 +42,6 @@ public class MenuAuthenticationSuccessListener implements AuthenticationSuccessL
 	
 	/**
 	 * 只加载菜单，不需要加载按钮
-	 * @param sysUser
 	 */
 	public void loadMenuTree(SysUser sysUser) {
 		// 获取到了当前登录用户的菜单和按钮 

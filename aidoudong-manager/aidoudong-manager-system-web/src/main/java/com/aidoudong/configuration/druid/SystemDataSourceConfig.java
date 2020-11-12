@@ -28,6 +28,8 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 
+import java.util.Objects;
+
 @Configuration
 @MapperScan(basePackages = "com.aidoudong.dao.system.mapper", sqlSessionTemplateRef = "systemSqlSessionTemplate") //扫描Mapper接口
 @EnableTransactionManagement // 开启事务管理
@@ -57,7 +59,7 @@ public class SystemDataSourceConfig {
     @Primary
     @Bean(name = "transactionManagerSystem")
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactorySystem(builder).getObject().createEntityManager();
+        return Objects.requireNonNull(entityManagerFactorySystem(builder).getObject()).createEntityManager();
     }
 
     @Primary
@@ -79,7 +81,7 @@ public class SystemDataSourceConfig {
     @Primary
     @Bean(name = "transactionManagerSystem")
     PlatformTransactionManager transactionManagerOAuth2(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactorySystem(builder).getObject());
+        return new JpaTransactionManager(Objects.requireNonNull(entityManagerFactorySystem(builder).getObject()));
     }
 	
 	//==================================↓↓↓是mybatis↓↓↓==================================
@@ -107,7 +109,7 @@ public class SystemDataSourceConfig {
  
     @Primary
     @Bean(name = "systemSqlSessionTemplate")
-    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("systemSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("systemSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
     

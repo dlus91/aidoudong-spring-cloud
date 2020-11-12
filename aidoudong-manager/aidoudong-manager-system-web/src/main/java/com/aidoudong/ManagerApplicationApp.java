@@ -1,6 +1,5 @@
 package com.aidoudong;
 
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,9 +15,6 @@ import java.io.InputStreamReader;
  */
 @SpringBootApplication
 public class ManagerApplicationApp implements WebMvcConfigurer {
-
-	InputStream is = null;
-	BufferedReader br = null;
 
     public static void main(String[] args) throws IOException {
 		new SpringApplicationBuilder(ManagerApplicationApp.class).run(args);
@@ -36,12 +32,9 @@ public class ManagerApplicationApp implements WebMvcConfigurer {
 		Process ps = pb.start();
 		try(
 			InputStream is = ps.getErrorStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			BufferedReader br = new BufferedReader(new InputStreamReader(is))
 		){
-			br.lines().forEach(str -> {
-				String s = str;
-				System.out.println(s);
-			});
+			br.lines().forEach(System.out::println);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

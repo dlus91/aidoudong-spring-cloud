@@ -13,7 +13,7 @@ public final class PropertiesUtil {
 	
 	static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
-	private static Properties sensitiveCodeProperties = null;
+	private static Properties sensitiveCodeProperties;
 
 	static{
 		sensitiveCodeProperties = PropertiesUtil.getProperties("application-sensitiveCode.properties");

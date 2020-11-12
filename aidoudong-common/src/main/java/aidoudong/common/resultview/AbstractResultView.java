@@ -1,41 +1,36 @@
 package aidoudong.common.resultview;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.beans.Transient;
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * @Author: dlus91
+ * @Date: 2020/8/21 11:30
+ */
 public abstract class AbstractResultView {
 
-	private static final long serialVersionUID = 4325431521204380876L;
-
-	public final static String SUCCESS_MESSAGE = "SUCCESS";
-	public final static String FAIL_MESSAGE = "FAIL";
-	
-	private int code;
-	private String message;
-	private Object data;
-	private String dateFormater;
-	private Map<String, String> codeMap;
-
-	public AbstractResultView() {}
-
-	public AbstractResultView(int code, String message,
-									Object data, String dateFormater,
-									Map<String, String> codeMap){
-		this.code = code;
-		this.message = convertMessage(message);
-		this.data = data;
-		this.dateFormater = dateFormater;
-		this.codeMap = codeMap;
-	}
+	private final int code;
+	private final String message;
+	private final Object data;
+	private final String dateFormatter;
+	private final Map<String, String> codeMap;
 
 	public abstract String convertMessage(String message);
 
+	public AbstractResultView(int code, String message,
+							  Object data, String dateFormater,
+							  Map<String, String> codeMap){
+		this.code = code;
+		this.message = convertMessage(message);
+		this.data = data;
+		this.dateFormatter = dateFormater;
+		this.codeMap = codeMap;
+	}
+
+	@SuppressWarnings("unused")
 	public String outPutData() {
 		return JSONObject.toJSONString(this);
 	}
@@ -51,8 +46,8 @@ public abstract class AbstractResultView {
 	}
 
 	@Transient
-	public String getDateFormater() {
-		return dateFormater;
+	public String getDateFormatter() {
+		return dateFormatter;
 	}
 	@Transient
 	public Map<String, String> getCodeMap() {
@@ -68,13 +63,13 @@ public abstract class AbstractResultView {
 		return getCode() == that.getCode() &&
 				Objects.equals(getMessage(), that.getMessage()) &&
 				Objects.equals(getData(), that.getData()) &&
-				Objects.equals(getDateFormater(), that.getDateFormater()) &&
+				Objects.equals(getDateFormatter(), that.getDateFormatter()) &&
 				Objects.equals(getCodeMap(), that.getCodeMap());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getCode(), getMessage(), getData(), getDateFormater(), getCodeMap());
+		return Objects.hash(getCode(), getMessage(), getData(), getDateFormatter(), getCodeMap());
 	}
 
 	@Override
@@ -83,7 +78,7 @@ public abstract class AbstractResultView {
 				"code=" + code +
 				", message='" + message + '\'' +
 				", data=" + data +
-				", dateFormater='" + dateFormater + '\'' +
+				", dateFormatter='" + dateFormatter + '\'' +
 				", codeMap=" + codeMap +
 				'}';
 	}

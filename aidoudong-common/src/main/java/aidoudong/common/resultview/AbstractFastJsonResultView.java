@@ -9,7 +9,10 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Map;
 
-@SuppressWarnings("unchecked")
+/**
+ * @Author: dlus91
+ * @Date: 2020/8/21 17:21
+ */
 public abstract class AbstractFastJsonResultView implements BaseResultView {
 
 	private static final SerializerFeature resultWriteDateUserDateFormat = SerializerFeature.WriteDateUseDateFormat;
@@ -45,7 +48,6 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 
 	@Override
 	public String fail(AbstractResultView data) {
-//		SerializeFilter[] serializeFilters = getResultViewIncludeFilter(resultFailProperties);
 		return jsonFormater(data,null);
 	}
 
@@ -54,7 +56,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 				data,
 				SerializeConfig.globalInstance,
 				serializeFilters,
-				data.getDateFormater(),
+				data.getDateFormatter(),
 				JSONObject.DEFAULT_GENERATE_FEATURE,
 				resultWriteDateUserDateFormat,
 				prettyFormat,
@@ -97,16 +99,16 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 	
 	private static SerializeFilter[] getResultViewIncludeFilter(String[] includeProperties) {
 		PropertyPreFilters filters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter includefilter = filters.addFilter();
-        includefilter.addIncludes(includeProperties);
-        return new SerializeFilter[] {includefilter};
+        PropertyPreFilters.MySimplePropertyPreFilter includeFilter = filters.addFilter();
+        includeFilter.addIncludes(includeProperties);
+        return new SerializeFilter[] {includeFilter};
 	}
 	
 	private static SerializeFilter[] getResultViewExcludeFilter(String[] excludeProperties) {
 		PropertyPreFilters filters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter excludefilter = filters.addFilter();
-        excludefilter.addExcludes(excludeProperties);
-        return new SerializeFilter[] {excludefilter};
+        PropertyPreFilters.MySimplePropertyPreFilter excludeFilter = filters.addFilter();
+        excludeFilter.addExcludes(excludeProperties);
+        return new SerializeFilter[] {excludeFilter};
 	}
 	
 	private SerializeFilter[] getResultViewIncludeFilter(String[] includeProperties, Map<String, String> codeMap) {

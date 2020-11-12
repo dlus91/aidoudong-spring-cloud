@@ -1,7 +1,7 @@
 package com.aidoudong.common.exception;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultView;
+import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.common.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class ExceptionHandle {
     public String handleParamException(HttpMessageNotReadableException httpMessageNotReadableException, HttpServletRequest request) {
         Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
         String msg = errorCodeProps.getProperty(httpMessageNotReadableException.getMessage());
-        return fastJsonResultView.fail(new ResultView(PARAM_CODE,PARAM_MESSAGE,msg));
+        return fastJsonResultView.fail(ResultViewBuilder.of(PARAM_CODE, PARAM_MESSAGE, msg));
     }
 	
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -55,7 +55,7 @@ public class ExceptionHandle {
 		for(ObjectError error : errorList) {
 			resultList.add(errorCodeProps.getProperty(error.getDefaultMessage()));
 		}
-		return fastJsonResultView.fail(new ResultView(PARAM_CODE,PARAM_MESSAGE,resultList));
+		return fastJsonResultView.fail(ResultViewBuilder.of(PARAM_CODE,PARAM_MESSAGE,resultList));
     }
 	
     @ExceptionHandler(value = BussinessException.class) // 处理BussinessException异常
@@ -63,7 +63,7 @@ public class ExceptionHandle {
         Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
     	String msg = errorCodeProps.getProperty(bussiness.getMessage());
     	int exceptionCode = bussiness.getCode() > 0 ? bussiness.getCode() : BUSSINESS_CODE;
-		return fastJsonResultView.fail(new ResultView(exceptionCode,PARAM_MESSAGE,msg));
+		return fastJsonResultView.fail(ResultViewBuilder.of(exceptionCode,PARAM_MESSAGE,msg));
     }
     
     @ExceptionHandler(value = Exception.class) // 处理Exception异常
@@ -80,7 +80,7 @@ public class ExceptionHandle {
             }
             String msg = stringBuilder.toString();
             logger.error("ConstraintViolation msg is : " + msg);
-            resultStr = fastJsonResultView.fail(new ResultView(BUSSINESS_CODE,PARAM_MESSAGE,msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.of(BUSSINESS_CODE,PARAM_MESSAGE,msg));
         } else if (e instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException applicationException = (MethodArgumentNotValidException) e;
             List<ObjectError> allErrors = applicationException.getBindingResult().getAllErrors();
@@ -90,7 +90,7 @@ public class ExceptionHandle {
             }
             String msg = stringBuilder.toString();
             logger.error("ArgumentNotValid  msg is : " + msg);
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof MissingServletRequestParameterException) {
             MissingServletRequestParameterException applicationException = (MissingServletRequestParameterException) e;
             String parameterName = applicationException.getParameterName();
@@ -100,26 +100,26 @@ public class ExceptionHandle {
                     		+ parameterName + " is null "
                     		+ " , expect: " + parameterType);
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpMediaTypeNotSupportedException) {
             HttpMediaTypeNotSupportedException applicationException = (HttpMediaTypeNotSupportedException) e;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(applicationException.getContentType().getSubtype());
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             HttpRequestMethodNotSupportedException applicationException = (HttpRequestMethodNotSupportedException) e;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(applicationException.getMethod());
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof NoHandlerFoundException) {
             NoHandlerFoundException applicationException = (NoHandlerFoundException) e;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(
                     applicationException.getHttpMethod() + " --> " + applicationException.getRequestURL());
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof MethodArgumentTypeMismatchException) {
             MethodArgumentTypeMismatchException applicationException = (MethodArgumentTypeMismatchException) e;
             StringBuilder stringBuilder = new StringBuilder();
@@ -127,15 +127,15 @@ public class ExceptionHandle {
                     "parameter " + applicationException.getName()
                     + " is not type of " + applicationException.getRequiredType().getSimpleName());
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpMessageNotReadableException) {
             HttpMessageNotReadableException applicationException = (HttpMessageNotReadableException) e;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(applicationException.getMessage());
             String msg = stringBuilder.toString();
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, msg));
         } else {
-            resultStr = fastJsonResultView.fail(new ResultView().fail(ERROR_CODE, e.getMessage()));
+            resultStr = fastJsonResultView.fail(ResultViewBuilder.fail(ERROR_CODE, e.getMessage()));
         }
         return resultStr;
     }
