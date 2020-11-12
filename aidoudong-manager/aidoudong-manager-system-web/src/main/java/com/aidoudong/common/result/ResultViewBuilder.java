@@ -50,11 +50,11 @@ public final class ResultViewBuilder extends AbstractResultView {
 		return new ResultViewBuilder(500, FAIL_MESSAGE, null, null, null);
 	}
 
-	public static AbstractResultView fail(String message){
+	public static ResultViewBuilder fail(String message){
 		return new ResultViewBuilder(500, message, null, null, null);
 	}
 
-	public static AbstractResultView fail(int code, String message){
+	public static ResultViewBuilder fail(int code, String message){
 		return new ResultViewBuilder(code, message, null, null, null);
 	}
 
