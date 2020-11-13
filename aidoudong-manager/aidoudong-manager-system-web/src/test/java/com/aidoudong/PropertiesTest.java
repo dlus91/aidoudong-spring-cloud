@@ -1,10 +1,8 @@
 package com.aidoudong;
 
-import com.aidoudong.common.utils.PropertiesUtil;
+import com.aidoudong.common.utils.PropertiesEnum;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
 
@@ -18,24 +16,25 @@ public class PropertiesTest{
 
     @Test
     public void test01(){
-        Properties errorCode = PropertiesUtil.getErrorCodeEnProperties();
-        System.out.println(errorCode.get("SUCCESS"));
-        System.out.println(errorCode.getProperty("SUCCESS33"));
 
-        String aaa = "SUCCESS响应,但是出现了ID_NULL";
-        System.out.println(PropertiesUtil.convertErrorCodeEnProperties(aaa));
-        System.out.println(PropertiesUtil.convertErrorCodeEnProperty(aaa,"ID_NULL"));
+        System.out.println("=========================");
+        String key = "USERNAME_NULL2";
+        System.out.println(PropertiesEnum.ERROR_CODE_EN.getProperty("USERNAME_NULL"));
+        System.out.println(PropertiesEnum.ERROR_CODE_EN.getProperty(key,key));
+        System.out.println(PropertiesEnum.ERROR_CODE_EN.getOrDefault("USERNAME_NULL3","嘎嘎"));
     }
     
     @Test
     public void test02(){
-        Properties sensitiveCode = PropertiesUtil.getSensitiveCodeProperties();
-        System.out.println(sensitiveCode.getProperty("色情"));
-        System.out.println(sensitiveCode.getProperty("毛泽东"));
-
         String aaa = "色情书籍，泽东可能也看了";
-        System.out.println(PropertiesUtil.convertSensitiveCodeProperties(aaa));
-        System.out.println(PropertiesUtil.convertSensitiveCodeProperty(aaa,"泽东"));
+
+        System.out.println("=========================");
+
+        System.out.println(PropertiesEnum.SENSITIVE_CODE.getProperty("色情"));
+        System.out.println(PropertiesEnum.SENSITIVE_CODE.getProperty("啊泽东"));
+
+        System.out.println(PropertiesEnum.SENSITIVE_CODE.replaceAll(aaa));
+        System.out.println(PropertiesEnum.SENSITIVE_CODE.replace(aaa,"泽东"));
     }
 
     @Test

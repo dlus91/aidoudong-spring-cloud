@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 
 import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.utils.PropertiesEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import com.aidoudong.common.utils.PropertiesUtil;
 
 
 @RestControllerAdvice
@@ -41,8 +40,7 @@ public class ExceptionHandle {
     
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
     public String handleParamException(HttpMessageNotReadableException httpMessageNotReadableException) {
-        Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
-        String msg = errorCodeProps.getProperty(httpMessageNotReadableException.getMessage());
+        String msg = PropertiesEnum.ERROR_CODE_EN.getProperty(httpMessageNotReadableException.getMessage());
         return fastJsonResultView.fail(ResultViewBuilder.of(PARAM_CODE,PARAM_MESSAGE,msg));
     }
 	
@@ -51,7 +49,7 @@ public class ExceptionHandle {
 		BindingResult results = methodArgumentNotValidException.getBindingResult();
 		List<ObjectError> errorList = results.getAllErrors();
 		List<String> resultList = new ArrayList<>();
-        Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
+        Properties errorCodeProps =  PropertiesEnum.ERROR_CODE_EN.getProperties();
 		for(ObjectError error : errorList) {
 			resultList.add(errorCodeProps.getProperty(error.getDefaultMessage()));
 		}
@@ -60,7 +58,7 @@ public class ExceptionHandle {
 	
     @ExceptionHandler(value = BussinessException.class) // 处理BussinessException异常
     public String handleBussinessException(BussinessException bussiness) {
-        Properties errorCodeProps = PropertiesUtil.getErrorCodeEnProperties();
+        Properties errorCodeProps =  PropertiesEnum.ERROR_CODE_EN.getProperties();
     	String msg = errorCodeProps.getProperty(bussiness.getMessage());
     	int exceptionCode = bussiness.getCode() > 0 ? bussiness.getCode() : BUSSINESS_CODE;
 		return fastJsonResultView.fail(ResultViewBuilder.of(exceptionCode,PARAM_MESSAGE,msg));

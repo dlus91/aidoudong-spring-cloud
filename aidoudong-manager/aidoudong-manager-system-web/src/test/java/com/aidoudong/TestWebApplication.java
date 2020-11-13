@@ -1,5 +1,6 @@
 package com.aidoudong;
 
+import com.aidoudong.common.utils.DictionaryCodeUtil;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.entity.system.SysPermission;
 import com.aidoudong.entity.system.SysRole;
@@ -15,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -55,6 +59,14 @@ public class TestWebApplication {
 //		System.out.println("permission:"+sysPermission.toString());
 		List<SysPermission> permissionList = sysPermissionService.findByUserId(9L);
 		permissionList.forEach(System.out::println);
+	}
+
+	@Test
+	public void test01(){
+		Map codeMap = DictionaryCodeUtil.getCodeMap();
+		Map map = Collections.checkedMap(codeMap, String.class, List.class);
+		System.out.println(map);
+		map.put("a1", "");
 	}
 
 
