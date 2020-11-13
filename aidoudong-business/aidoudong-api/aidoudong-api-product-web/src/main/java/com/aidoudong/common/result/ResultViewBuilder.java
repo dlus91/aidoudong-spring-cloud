@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public final class ResultViewBuilder extends AbstractResultView {
 
-	enum Message{
+	public enum Message{
 		SUCCESS,FAIL
 	}
 
