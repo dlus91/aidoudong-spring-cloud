@@ -25,7 +25,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 		if(data != null){
 			serializeFilters = validCodeMap(data.getCodeMap());
 		}
-		return jsonFormater(data, serializeFilters);
+		return jsonFormatter(data, serializeFilters);
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 			throw new NullPointerException("ResultView is null ...");
 		}
 		SerializeFilter[] serializeFilters = validResultViewFilter(data, true, includeProperties);
-		return jsonFormater(data, serializeFilters);
+		return jsonFormatter(data, serializeFilters);
 	}
 	
 	@Override
@@ -43,15 +43,15 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 			throw new NullPointerException("ResultView is null ...");
 		}
 		SerializeFilter[] serializeFilters = validResultViewFilter(data, false, excludeProperties);
-		return jsonFormater(data,serializeFilters);
+		return jsonFormatter(data,serializeFilters);
 	}
 
 	@Override
 	public String fail(AbstractResultView data) {
-		return jsonFormater(data,null);
+		return jsonFormatter(data,null);
 	}
 
-	private String jsonFormater(AbstractResultView data, SerializeFilter[] serializeFilters){
+	private String jsonFormatter(AbstractResultView data, SerializeFilter[] serializeFilters){
 		return JSONObject.toJSONString(
 				data,
 				SerializeConfig.globalInstance,

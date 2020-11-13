@@ -1,6 +1,5 @@
 package com.aidoudong.entity.business;
 
-import java.beans.Transient;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ClientUser implements UserDetails{
 	/**
 	 * 密码需要通过加密后存储
 	 */
-	private String password;
+	private transient String password;
 	/**
 	 * 账号是否有效 1 未过期，0已过期
 	 * 1 true
@@ -65,7 +64,6 @@ public class ClientUser implements UserDetails{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Transient
 	public String getPassword() {
 		return password;
 	}

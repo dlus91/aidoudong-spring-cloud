@@ -26,6 +26,7 @@ public class PermissionServiceImpl implements PermissionService{
 		Object principal = authentication.getPrincipal();
         String requestUrl = request.getRequestURI();
         logger.info("requestUrl:{}",requestUrl);
+        //authentication.getAuthorities()的返回类型是Collection<? extends GrantedAuthority>，而为了方便后续操作强转为List<SimpleGrantedAuthority>，这是合理的
         @SuppressWarnings("unchecked")
         List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
 

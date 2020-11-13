@@ -38,6 +38,7 @@ public class ProductControler {
 	public String list() {
 		tracer.currentSpan().tag("name", "product-server -> product1-server");
 		ResultViewBuilder resultView = JSONObject.parseObject(testFeignClient.findByIdJson(), ResultViewBuilder.class);
+		//因为testFeignClient.findByIdJson()返回的data是list类型的，而ResultViewBuilder的date是以Object接受的，所以因为强制转换，根据返回类型判断得出的。
 		@SuppressWarnings("unchecked")
 		List<String> resultList = (List<String>) resultView.getData();
 		List<String> list = new ArrayList<>();
