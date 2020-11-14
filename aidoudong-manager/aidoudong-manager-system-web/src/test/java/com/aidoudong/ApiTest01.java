@@ -3,6 +3,9 @@ package com.aidoudong;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.UnaryOperator;
@@ -70,23 +73,18 @@ public class ApiTest01 {
         System.out.println(max);
     }
 
-    static <T> T[] toArray(T... args){
-        return args;
-    }
-
-    static <T> T[] pickTwo(T a,T b,T c){
-        switch (ThreadLocalRandom.current().nextInt(3)){
-            case 0: return toArray(a, b);
-            case 1: return toArray(a, c);
-            case 2: return toArray(b, c);
-        }
-        throw new AssertionError();
-    }
-
     @Test
     public void test04(){
-        String[] attributes = pickTwo("Good", "Fast", "Cheap");
-        System.out.println(attributes);
+        BigDecimal bigDecimal = new BigDecimal(22.3);
+        BigDecimal add = bigDecimal.add(BigDecimal.valueOf(3.2));
+        BigDecimal plus = add.plus(new MathContext(5, RoundingMode.HALF_UP));
+        System.out.println("============================");
+        System.out.println(plus);
+        System.out.printf("negate():%s\n", plus.negate());
+        System.out.printf("precision():%s\n", plus.precision());
+        System.out.printf("scale():%s\n", plus.scale());
+        System.out.printf("signum():%s\n", plus.signum());
+
     }
 
 

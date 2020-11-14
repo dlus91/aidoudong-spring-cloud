@@ -76,7 +76,7 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 		ValueFilter valueFilter = (object, name, value) -> {
 			if("data".equals(name)){
 				if(null == value) {
-					return value;
+					return null;
 				}
 				if(value instanceof org.springframework.data.domain.Page){
 					JSONObject jsonPage = (JSONObject) JSON.toJSON(value);
@@ -147,10 +147,10 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 			return pageJpaType;
 		}
 		String resultStr;
-		String fristStr = object.toString().trim().split("")[0];
-		if("[".equals(fristStr)) {
+		String firstStr = object.toString().trim().split("")[0];
+		if("[".equals(firstStr)) {
 			resultStr = jsonArrayType;
-		}else if("{".equals(fristStr)) {
+		}else if("{".equals(firstStr)) {
 			resultStr = jsonObjectType;
 		}else {
 			resultStr = jsonObjectType;

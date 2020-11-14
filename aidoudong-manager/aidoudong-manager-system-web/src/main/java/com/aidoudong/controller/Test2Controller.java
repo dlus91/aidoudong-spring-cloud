@@ -2,6 +2,7 @@ package com.aidoudong.controller;
 
 import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.utils.PropertiesEnum;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -58,6 +60,13 @@ public class Test2Controller {
 				new String[] {"id","username","nickName","mobile","email","accountNonExpired","accountNonLocked","enabled"});
 //				new String[] {"id"});
 	}
+
+
+	@GetMapping("/page/include3")
+	public String pageInclude3() {
+		return fastJsonResultView.ok(ResultViewBuilder.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
+	}
+
 	
 	@GetMapping("/fail")
 	public String fail() {

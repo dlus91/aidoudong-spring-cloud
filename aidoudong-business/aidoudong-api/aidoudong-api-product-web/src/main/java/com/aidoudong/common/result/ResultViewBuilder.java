@@ -11,9 +11,8 @@ import java.util.Map;
  */
 public final class ResultViewBuilder extends AbstractResultView {
 
-	public enum Message{
-		SUCCESS,FAIL
-	}
+	public final static String SUCCESS_MESSAGE = "SUCCESS";
+	public final static String FAIL_MESSAGE = "FAIL";
 
 	private ResultViewBuilder(int code, String message, Object data, String dateFormatter, Map<String, String> codeMap) {
 		super(code, message, data, dateFormatter, codeMap);
@@ -36,7 +35,7 @@ public final class ResultViewBuilder extends AbstractResultView {
 	}
 
 	public static ResultViewBuilder success(){
-		return new ResultViewBuilder(200, Message.SUCCESS.name(), null, null, null);
+		return new ResultViewBuilder(200, SUCCESS_MESSAGE, null, null, null);
 	}
 
     public static ResultViewBuilder success(String message){
@@ -44,11 +43,11 @@ public final class ResultViewBuilder extends AbstractResultView {
 	}
 
 	public static ResultViewBuilder success(Object data){
-		return new ResultViewBuilder(200, Message.SUCCESS.name(), data, null, null);
+		return new ResultViewBuilder(200, SUCCESS_MESSAGE, data, null, null);
 	}
 
 	public static ResultViewBuilder fail(){
-		return new ResultViewBuilder(500, Message.FAIL.name(), null, null, null);
+		return new ResultViewBuilder(500, FAIL_MESSAGE, null, null, null);
 	}
 
 	public static ResultViewBuilder fail(String message){

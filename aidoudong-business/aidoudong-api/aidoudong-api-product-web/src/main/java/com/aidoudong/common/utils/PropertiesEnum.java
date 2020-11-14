@@ -18,7 +18,6 @@ public enum PropertiesEnum {
 
     ERROR_CODE_EN("config/application-errorCodeEn.properties");
 
-
     private static final Logger logger = LoggerFactory.getLogger(PropertiesEnum.class);
     private final String location;
     private Properties properties;
@@ -76,6 +75,11 @@ public enum PropertiesEnum {
             str = str.replaceAll(strKey, this.properties.getProperty(strKey));
         }
         return str;
+    }
+
+    @Override
+    public String toString() {
+        return this.location;
     }
 
 }

@@ -77,4 +77,9 @@ public enum PropertiesEnum {
         return str;
     }
 
+    @Override
+    public String toString() {
+        return this.location;
+    }
+
 }
