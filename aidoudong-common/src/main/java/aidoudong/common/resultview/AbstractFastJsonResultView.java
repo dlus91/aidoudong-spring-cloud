@@ -8,16 +8,13 @@ import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @Author: dlus91
  * @Date: 2020/8/21 17:21
  */
 public abstract class AbstractFastJsonResultView implements BaseResultView {
-
-	private static final SerializerFeature resultWriteDateUserDateFormat = SerializerFeature.WriteDateUseDateFormat;
-	private static final SerializerFeature resultNullFormat = SerializerFeature.WriteMapNullValue;
-	private static final SerializerFeature prettyFormat = SerializerFeature.PrettyFormat;
 
 	@Override
 	public String ok(AbstractResultView data) {
@@ -51,6 +48,11 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 		return jsonFormatter(data,null);
 	}
 
+	@Override
+	public String test(AbstractResultView data, Function<AbstractResultView, String> function) {
+		return function.apply(data);
+	}
+
 	private String jsonFormatter(AbstractResultView data, SerializeFilter[] serializeFilters){
 		return JSONObject.toJSONString(
 				data,
@@ -58,9 +60,9 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 				serializeFilters,
 				data.getDateFormatter(),
 				JSONObject.DEFAULT_GENERATE_FEATURE,
-				resultWriteDateUserDateFormat,
-				prettyFormat,
-				resultNullFormat);
+				SerializerFeature.WriteDateUseDateFormat,
+				SerializerFeature.PrettyFormat,
+				SerializerFeature.WriteMapNullValue);
 	}
 
 	private SerializeFilter[] validCodeMap(Map<String, String> codeMap){

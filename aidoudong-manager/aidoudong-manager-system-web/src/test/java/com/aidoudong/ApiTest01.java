@@ -1,5 +1,6 @@
 package com.aidoudong;
 
+import com.aidoudong.common.utils.PropertiesEnum;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -85,6 +86,17 @@ public class ApiTest01 {
         System.out.printf("scale():%s\n", plus.scale());
         System.out.printf("signum():%s\n", plus.signum());
 
+    }
+
+    @Test
+    public void test05(){
+        String aaa = "Internal Server Error";
+        System.out.println(String.join("_", aaa.split(" ")));
+    }
+
+    @Test
+    public void test06(){
+        System.out.println(PropertiesEnum.ERROR_CODE_EN.getProperty("internal_server_error"));
     }
 
 

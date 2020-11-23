@@ -2,6 +2,7 @@ package com.aidoudong.common.result;
 
 import aidoudong.common.resultview.AbstractResultView;
 import com.aidoudong.common.utils.PropertiesEnum;
+import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
@@ -35,23 +36,24 @@ public final class ResultViewBuilder extends AbstractResultView {
 	}
 
 	public static ResultViewBuilder success(){
-		return new ResultViewBuilder(200, SUCCESS_MESSAGE, null, null, null);
+		return new ResultViewBuilder(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), null, null, null);
 	}
 
     public static ResultViewBuilder success(String message){
-		return new ResultViewBuilder(200, message, null, null, null);
+		return new ResultViewBuilder(HttpStatus.OK.value(), message, null, null, null);
 	}
 
 	public static ResultViewBuilder success(Object data){
-		return new ResultViewBuilder(200, SUCCESS_MESSAGE, data, null, null);
+		return new ResultViewBuilder(HttpStatus.OK.value(), HttpStatus.OK.getReasonPhrase(), data, null, null);
 	}
 
 	public static ResultViewBuilder fail(){
-		return new ResultViewBuilder(500, FAIL_MESSAGE, null, null, null);
+		String failMessage = String.join("_", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase().split(" "));
+		return new ResultViewBuilder(HttpStatus.INTERNAL_SERVER_ERROR.value(), failMessage, null, null, null);
 	}
 
 	public static ResultViewBuilder fail(String message){
-		return new ResultViewBuilder(500, message, null, null, null);
+		return new ResultViewBuilder(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, null, null, null);
 	}
 
 	public static ResultViewBuilder fail(int code, String message){

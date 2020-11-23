@@ -1,16 +1,22 @@
 package com.aidoudong.controller;
 
+import aidoudong.common.resultview.AbstractResultView;
 import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultViewBuilder;
 import com.aidoudong.common.utils.PropertiesEnum;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -65,6 +71,28 @@ public class Test2Controller {
 	@GetMapping("/page/include3")
 	public String pageInclude3() {
 		return fastJsonResultView.ok(ResultViewBuilder.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
+	}
+
+	@GetMapping("/page/include4")
+	@ResponseBody
+	public String pageInclude4(Page<ClientUser> page) {
+		ClientUser user = new ClientUser();
+		user.setUsername("test");
+		return fastJsonResultView.test(ResultViewBuilder.success(clientUserService.selectPage(page, user)), abstractResultView -> {
+					AbstractResultView resultView = (AbstractResultView) abstractResultView;
+					SerializeFilter[] resultViewFilter = null;
+					return JSONObject.toJSONString(
+							resultView,
+							SerializeConfig.globalInstance,
+							null,
+							resultView.getDateFormatter(),
+							JSONObject.DEFAULT_GENERATE_FEATURE,
+							SerializerFeature.WriteDateUseDateFormat,
+							SerializerFeature.PrettyFormat,
+							SerializerFeature.WriteMapNullValue
+					);
+				}
+		);
 	}
 
 	

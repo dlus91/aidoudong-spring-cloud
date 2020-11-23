@@ -7,6 +7,7 @@ import org.springframework.core.io.support.EncodedResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -16,12 +17,13 @@ import java.util.Set;
  */
 public enum PropertiesEnum {
 
-    ERROR_CODE_EN("config/application-errorCodeEn.properties"),
+    ERROR_CODE_EN("config/application-errorCodeEn.properties","错误码"),
 
-    SENSITIVE_CODE("config/application-sensitiveCode.properties");
+    SENSITIVE_CODE("config/application-sensitiveCode.properties", "敏感字");
 
     private static final Logger logger = LoggerFactory.getLogger(PropertiesEnum.class);
     private final String location;
+    private final String keyName;
     private Properties properties;
     static {
         for (PropertiesEnum simple : PropertiesEnum.values()){
@@ -31,8 +33,13 @@ public enum PropertiesEnum {
         }
     }
 
-    PropertiesEnum(String location) {
+    PropertiesEnum(String location, String keyName) {
         this.location = location;
+        this.keyName = keyName;
+    }
+
+    public String getKeyName() {
+        return keyName;
     }
 
     public static Properties getProperties(String location){
@@ -53,34 +60,40 @@ public enum PropertiesEnum {
     }
 
     public String getProperty(String key) {
-        return this.properties.getProperty(key);
+        Objects.requireNonNull(key,this.getKeyName()+"key为空");
+        return this.properties.getProperty(key.toUpperCase());
     }
 
     public String getProperty(String key,String defaultValue) {
-        return this.properties.getProperty(key,defaultValue);
+        Objects.requireNonNull(key,this.getKeyName()+"key为空");
+        return this.properties.getProperty(key.toUpperCase(),defaultValue);
     }
 
     public String getOrDefault(String key,String defaultValue) {
-        return (String) this.properties.getOrDefault(key,defaultValue);
+        Objects.requireNonNull(key,this.getKeyName()+"key为空");
+        return (String) this.properties.getOrDefault(key.toUpperCase(),defaultValue);
     }
 
     public String replace(String str,String key){
-        String value = this.properties.getProperty(key);
+        Objects.requireNonNull(str,this.getKeyName()+"语句为空");
+        Objects.requireNonNull(key,this.getKeyName()+"key为空");
+        String value = this.properties.getProperty(key.toUpperCase());
         if(value == null){ return str; }
         return str.replaceAll(key, value);
     }
 
     public String replaceAll(String str){
+        Objects.requireNonNull(str,this.getKeyName()+"语句为空");
         Set<Object> keys = this.properties.keySet();
         for (Object key : keys){
             String strKey = key.toString();
-            str = str.replaceAll(strKey, this.properties.getProperty(strKey));
+            str = str.replaceAll(strKey.toUpperCase(), this.properties.getProperty(strKey));
         }
         return str;
     }
 
     @Override
     public String toString() {
-        return this.location;
+        return this.keyName;
     }
 }
