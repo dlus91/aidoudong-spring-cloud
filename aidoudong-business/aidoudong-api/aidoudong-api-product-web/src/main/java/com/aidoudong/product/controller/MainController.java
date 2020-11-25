@@ -1,7 +1,7 @@
 package com.aidoudong.product.controller;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.aidoudong.common.utils.DictionaryCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class MainController {
 	@ResponseBody
 	public String refreshDectionaryTable() {
 		dictionaryCodeUtil.refresh();
-		return fastJsonResultView.ok(ResultViewBuilder.success());
+		return fastJsonResultView.ok(ResultView.success());
 	}
 	
 }

@@ -1,7 +1,7 @@
 package com.aidoudong.controller.system;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.aidoudong.entity.system.SysRole;
 import com.aidoudong.service.system.SysRoleService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +37,7 @@ public class SysRoleController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<SysRole> page, SysRole sysRole) {
-		return fastJsonResultView.ok(ResultViewBuilder.success(sysRoleService.selectPage(page, sysRole)));
+		return fastJsonResultView.ok(ResultView.success(sysRoleService.selectPage(page, sysRole)));
 	}
 	
 	/**
@@ -79,6 +79,6 @@ public class SysRoleController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		sysRoleService.deleteById(id);
-		return fastJsonResultView.ok(ResultViewBuilder.success());
+		return fastJsonResultView.ok(ResultView.success());
 	}
 }

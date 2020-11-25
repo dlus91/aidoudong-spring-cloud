@@ -2,7 +2,7 @@ package com.aidoudong.controller;
 
 import aidoudong.common.resultview.AbstractResultView;
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.aidoudong.common.utils.PropertiesEnum;
 import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,7 +38,7 @@ public class Test2Controller {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
 		return fastJsonResultView.ok(
-				ResultViewBuilder.success(clientUserService.selectPage(page, user)));
+				ResultView.success(clientUserService.selectPage(page, user)));
 	}
 	
 	@GetMapping("/page/include")
@@ -47,7 +46,7 @@ public class Test2Controller {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
 		return fastJsonResultView.include(
-				ResultViewBuilder.success(clientUserService.selectPage(page, user)),
+				ResultView.success(clientUserService.selectPage(page, user)),
 				new String[] {"id","username","nickName","mobile"});
 	}
 	
@@ -60,7 +59,7 @@ public class Test2Controller {
 		map.put("accountNonExpired", "effective_type");
 		map.put("accountNonLocked", "effective_type");
 		map.put("enabled", "effective_type");
-		ResultViewBuilder resultView = ResultViewBuilder.of(200,"成功",clientUserService.selectPage(page, user),map);
+		ResultView resultView = ResultView.of(200,"成功",clientUserService.selectPage(page, user),map);
 		return fastJsonResultView.include(
 				resultView,
 				new String[] {"id","username","nickName","mobile","email","accountNonExpired","accountNonLocked","enabled"});
@@ -70,7 +69,7 @@ public class Test2Controller {
 
 	@GetMapping("/page/include3")
 	public String pageInclude3() {
-		return fastJsonResultView.ok(ResultViewBuilder.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
+		return fastJsonResultView.ok(ResultView.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
 	}
 
 	@GetMapping("/page/include4")
@@ -78,14 +77,12 @@ public class Test2Controller {
 	public String pageInclude4(Page<ClientUser> page) {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
-		return fastJsonResultView.test(ResultViewBuilder.success(clientUserService.selectPage(page, user)), abstractResultView -> {
-					AbstractResultView resultView = (AbstractResultView) abstractResultView;
-					SerializeFilter[] resultViewFilter = null;
+		return fastJsonResultView.test(ResultView.success(clientUserService.selectPage(page, user)), abstractResultView -> {
 					return JSONObject.toJSONString(
-							resultView,
+							abstractResultView,
 							SerializeConfig.globalInstance,
 							null,
-							resultView.getDateFormatter(),
+							abstractResultView.getDateFormatter(),
 							JSONObject.DEFAULT_GENERATE_FEATURE,
 							SerializerFeature.WriteDateUseDateFormat,
 							SerializerFeature.PrettyFormat,
@@ -98,7 +95,7 @@ public class Test2Controller {
 	
 	@GetMapping("/fail")
 	public String fail() {
-		return fastJsonResultView.fail(ResultViewBuilder.fail("ERROR_EXIST"));
+		return fastJsonResultView.fail(ResultView.fail("ERROR_EXIST"));
 	}
 	
 }

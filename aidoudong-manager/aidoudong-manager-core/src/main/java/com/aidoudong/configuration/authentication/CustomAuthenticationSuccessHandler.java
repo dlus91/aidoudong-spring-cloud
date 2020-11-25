@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.aidoudong.properties.SimpleResultView;
+import com.aidoudong.common.ResultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 			
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			// 认证成功后，响应json字符串
-			response.getWriter().write(SimpleResultView.success().outPutData());
+			response.getWriter().write(ResultView.success().outPutData());
 		}else {
 			// 认证成功后，重定向到上次请求的地址上，引发跳转到认证页面的地址
 			logger.info("authentication："+ JSON.toJSONString(authentication));

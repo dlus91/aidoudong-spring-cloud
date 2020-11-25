@@ -1,7 +1,7 @@
 package com.aidoudong.controller;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.aidoudong.common.utils.DictionaryCodeUtil;
 import com.aidoudong.entity.system.SysUser;
 import com.aidoudong.service.system.SysUserService;
@@ -74,7 +74,7 @@ public class MainController {
 	@ResponseBody
 	public String refreshDectionaryTable() {
 		dictionaryCodeUtil.refresh();
-		return fastJsonResultView.ok(ResultViewBuilder.success());
+		return fastJsonResultView.ok(ResultView.success());
 	}
 	
 }

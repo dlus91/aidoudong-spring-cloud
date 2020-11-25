@@ -1,9 +1,8 @@
 package com.aidoudong.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import com.aidoudong.properties.SimpleResultView;
+import com.aidoudong.common.ResultView;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,7 @@ public class MobileLoginController {
 		request.getSession().setAttribute(SESSION_KEY, code);
 		// 3, 发送验证码到用户手机上
 		smsSend.sendSms(request.getParameter("mobile"), code);
-		return SimpleResultView.success().outPutData();
+		return ResultView.success().outPutData();
 	}
 	
 }

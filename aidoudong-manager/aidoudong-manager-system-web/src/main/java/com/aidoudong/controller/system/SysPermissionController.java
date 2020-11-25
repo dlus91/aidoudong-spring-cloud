@@ -1,7 +1,7 @@
 package com.aidoudong.controller.system;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.aidoudong.entity.system.SysPermission;
 import com.aidoudong.service.system.SysPermissionService;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class SysPermissionController {
 	public String list() {
 		// Mybatis-plus已经提供的，查询SysPermission表中的所有记录
 		List<SysPermission> list = sysPermissionService.list();
-		return fastJsonResultView.ok(ResultViewBuilder.success(list));
+		return fastJsonResultView.ok(ResultView.success(list));
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class SysPermissionController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		sysPermissionService.deleteById(id);
-		return fastJsonResultView.ok(ResultViewBuilder.success());
+		return fastJsonResultView.ok(ResultView.success());
 	}
 	
 	

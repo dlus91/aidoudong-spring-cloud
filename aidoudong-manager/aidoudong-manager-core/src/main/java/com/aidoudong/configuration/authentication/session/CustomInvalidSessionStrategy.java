@@ -3,12 +3,11 @@ package com.aidoudong.configuration.authentication.session;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.aidoudong.properties.SimpleResultView;
+import com.aidoudong.common.ResultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -43,7 +42,7 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 		cancelCookie(request,response);
 
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(SimpleResultView.fail(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录").outPutData());
+		response.getWriter().write(ResultView.fail(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录").outPutData());
 		
 	}
 	

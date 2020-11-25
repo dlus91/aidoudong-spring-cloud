@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aidoudong.common.resultview.BaseResultView;
-import com.aidoudong.common.result.ResultViewBuilder;
+import com.aidoudong.common.result.ResultView;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +37,7 @@ public class ProductControler {
 //	@PreAuthorize("#oauth2.hasScope('all')")
 	public String list() {
 		tracer.currentSpan().tag("name", "product-server -> product1-server");
-		ResultViewBuilder resultView = JSONObject.parseObject(testFeignClient.findByIdJson(), ResultViewBuilder.class);
+		ResultView resultView = JSONObject.parseObject(testFeignClient.findByIdJson(), ResultView.class);
 		//因为testFeignClient.findByIdJson()返回的data是list类型的，而ResultViewBuilder的date是以Object接受的，所以因为强制转换，根据返回类型判断得出的。
 		@SuppressWarnings("unchecked")
 		List<String> resultList = (List<String>) resultView.getData();
@@ -48,23 +48,23 @@ public class ProductControler {
 		
 		resultList.addAll(list);
 		
-		return fastJsonResultView.ok(ResultViewBuilder.success(resultList));
+		return fastJsonResultView.ok(ResultView.success(resultList));
 	}
 	
 	@GetMapping("/id/{id}")
 	public String getById(@PathVariable() Long id) {
-		return fastJsonResultView.ok(ResultViewBuilder.success(productServiceImpl.findById(id)));
+		return fastJsonResultView.ok(ResultView.success(productServiceImpl.findById(id)));
 	}
 	
 	@GetMapping("/findAll")
 	public String findAll() {
-		return fastJsonResultView.ok(ResultViewBuilder.success(productServiceImpl.findAll()));
+		return fastJsonResultView.ok(ResultView.success(productServiceImpl.findAll()));
 	}
 	
 	@PostMapping("/update")
 	public String update(Product product) {
 		productServiceImpl.update(product);
-		return fastJsonResultView.ok(ResultViewBuilder.success());
+		return fastJsonResultView.ok(ResultView.success());
 	}
 	
 }
