@@ -96,7 +96,7 @@ public class ApiTest01 {
 
     @Test
     public void test06(){
-        System.out.println(PropertiesEnum.ERROR_CODE_EN.getProperty("internal_server_error"));
+        System.out.println(PropertiesEnum.SENSITIVE_CODE.getProperty(""));
     }
 
 
