@@ -64,9 +64,9 @@ public class TestWebApplication {
 	@Test
 	public void test01(){
 		Map codeMap = DictionaryCodeUtil.getCodeMap();
-		Map map = Collections.checkedMap(codeMap, String.class, List.class);
-		System.out.println(map);
-		map.put("a1", "");
+//		Map map = Collections.checkedMap(codeMap, String.class, List.class);
+		System.out.println(codeMap);
+//		map.put("a1", "");
 	}
 
 

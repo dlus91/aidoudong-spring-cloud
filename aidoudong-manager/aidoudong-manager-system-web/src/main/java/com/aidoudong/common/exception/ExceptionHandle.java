@@ -5,6 +5,7 @@ import java.util.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import aidoudong.common.exception.BussinessException;
 import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultView;
 import com.aidoudong.common.utils.PropertiesEnum;
@@ -79,16 +80,6 @@ public class ExceptionHandle {
             String msg = stringBuilder.toString();
             logger.error("ConstraintViolation msg is : " + msg);
             resultStr = fastJsonResultView.fail(ResultView.of(BUSSINESS_CODE,PARAM_MESSAGE,msg));
-        } else if (e instanceof MethodArgumentNotValidException) {
-            MethodArgumentNotValidException applicationException = (MethodArgumentNotValidException) e;
-            List<ObjectError> allErrors = applicationException.getBindingResult().getAllErrors();
-            StringBuilder stringBuilder = new StringBuilder();
-            for (ObjectError error : allErrors) {
-                stringBuilder.append("[").append(error.getDefaultMessage()).append("]");
-            }
-            String msg = stringBuilder.toString();
-            logger.error("ArgumentNotValid  msg is : " + msg);
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof MissingServletRequestParameterException) {
             MissingServletRequestParameterException applicationException = (MissingServletRequestParameterException) e;
             String parameterName = applicationException.getParameterName();

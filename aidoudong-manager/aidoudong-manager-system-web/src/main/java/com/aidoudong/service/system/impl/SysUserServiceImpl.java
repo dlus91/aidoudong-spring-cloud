@@ -2,7 +2,7 @@ package com.aidoudong.service.system.impl;
 
 import java.util.Date;
 
-import com.aidoudong.common.utils.AssertUtil;
+import aidoudong.common.utils.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

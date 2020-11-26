@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import aidoudong.common.resultview.BaseResultView;
+import aidoudong.common.utils.AssertUtil;
 import com.aidoudong.common.result.ResultView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aidoudong.common.utils.AssertUtil;
 import com.aidoudong.product.entity.Product;
 import com.aidoudong.product.service.ProductService;
 
