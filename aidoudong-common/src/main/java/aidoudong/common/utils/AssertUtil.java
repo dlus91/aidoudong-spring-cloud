@@ -1,17 +1,19 @@
-package com.aidoudong.common.utils;
+package aidoudong.common.utils;
 
-import com.aidoudong.common.exception.BussinessException;
-import org.springframework.lang.Nullable;
+
+import aidoudong.common.exception.BussinessException;
+
+import java.util.Objects;
 
 public final class AssertUtil {
 
-	public static void isNull(@Nullable Object object, String message) {
+	public static void isNull(Object object, String message) {
 		if (object != null) {
 			throw new BussinessException(message);
 		}
 	}
 	
-	public static void notNull(@Nullable Object object, String message) {
+	public static void notNull(Object object, String message) {
 		if (object == null) {
 			throw new BussinessException(message);
 		}

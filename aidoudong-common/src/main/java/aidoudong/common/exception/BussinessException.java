@@ -1,4 +1,4 @@
-package com.aidoudong.common.exception;
+package aidoudong.common.exception;
 
 public class BussinessException extends RuntimeException{
 	
