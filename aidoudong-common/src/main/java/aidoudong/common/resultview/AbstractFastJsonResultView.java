@@ -49,7 +49,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 	}
 
 	@Override
-	public String test(AbstractResultView data, Function<AbstractResultView, String> function) {
+	public String output(AbstractResultView data, Function<AbstractResultView, String> function) {
 		return function.apply(data);
 	}
 

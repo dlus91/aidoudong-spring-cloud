@@ -23,11 +23,7 @@ public final class DictionaryCodeUtil implements BaseDictionaryCodeUtil {
 
 	@PostConstruct
 	public void refresh() {
-		try {
-			codeMap = getDictionaryCode();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
+		codeMap = getDictionaryCode();
 		logger.info("字典刷新成功:{} data: {}",getTableName(),codeMap);
 	}
 

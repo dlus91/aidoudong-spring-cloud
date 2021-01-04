@@ -26,9 +26,9 @@ public enum PropertiesEnum {
     private final String keyName;
     private Properties properties;
     static {
-        for (PropertiesEnum simple : PropertiesEnum.values()){
-            if(simple.properties == null){
-                simple.properties = PropertiesEnum.getProperties(simple.location);
+        for (PropertiesEnum single : PropertiesEnum.values()){
+            if(single.properties == null){
+                single.properties = PropertiesEnum.getProperties(single.location);
             }
         }
     }

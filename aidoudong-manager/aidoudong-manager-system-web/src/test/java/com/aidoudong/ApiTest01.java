@@ -4,6 +4,7 @@ import com.aidoudong.common.utils.PropertiesEnum;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -102,8 +103,11 @@ public class ApiTest01 {
 
     @Test
     public void test07(){
+        System.out.println(ThreadLocalRandom.current().nextDouble());
+    }
 
-
+    @Test
+    public void test08(){
     }
 
 

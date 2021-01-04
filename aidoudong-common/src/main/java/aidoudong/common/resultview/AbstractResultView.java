@@ -1,7 +1,5 @@
 package aidoudong.common.resultview;
 
-import com.alibaba.fastjson.JSONObject;
-
 import java.util.Map;
 import java.util.Objects;
 
@@ -9,28 +7,24 @@ import java.util.Objects;
  * @Author: dlus91
  * @Date: 2020/8/21 11:30
  */
-public abstract class AbstractResultView {
+public abstract class AbstractResultView<T> {
 
 	private final int code;
 	private final String message;
-	private final Object data;
+	private final T data;
 	private final transient String dateFormatter;
 	private final transient Map<String, String> codeMap;
 
 	public abstract String convertMessage(String message);
 
 	public AbstractResultView(int code, String message,
-							  Object data, String dateFormatter,
+							  T data, String dateFormatter,
 							  Map<String, String> codeMap){
 		this.code = code;
 		this.message = convertMessage(message);
 		this.data = data;
 		this.dateFormatter = dateFormatter;
 		this.codeMap = codeMap;
-	}
-
-	public String outPutData() {
-		return JSONObject.toJSONString(this);
 	}
 	
 	public int getCode() {
@@ -39,7 +33,7 @@ public abstract class AbstractResultView {
 	public String getMessage() {
 		return message;
 	}
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 

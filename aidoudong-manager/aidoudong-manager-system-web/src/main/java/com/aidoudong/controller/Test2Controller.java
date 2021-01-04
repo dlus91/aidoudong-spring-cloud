@@ -1,6 +1,5 @@
 package com.aidoudong.controller;
 
-import aidoudong.common.resultview.AbstractResultView;
 import aidoudong.common.resultview.BaseResultView;
 import com.aidoudong.common.result.ResultView;
 import com.aidoudong.common.utils.PropertiesEnum;
@@ -8,7 +7,6 @@ import com.aidoudong.entity.business.ClientUser;
 import com.aidoudong.service.business.client.ClientUserService;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
@@ -77,18 +75,18 @@ public class Test2Controller {
 	public String pageInclude4(Page<ClientUser> page) {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
-		return fastJsonResultView.test(ResultView.success(clientUserService.selectPage(page, user)), abstractResultView -> {
-					return JSONObject.toJSONString(
-							abstractResultView,
-							SerializeConfig.globalInstance,
-							null,
-							abstractResultView.getDateFormatter(),
-							JSONObject.DEFAULT_GENERATE_FEATURE,
-							SerializerFeature.WriteDateUseDateFormat,
-							SerializerFeature.PrettyFormat,
-							SerializerFeature.WriteMapNullValue
-					);
-				}
+		return fastJsonResultView.output(ResultView.success(clientUserService.selectPage(page, user)),
+				abstractResultView ->
+					JSONObject.toJSONString(
+						abstractResultView,
+						SerializeConfig.globalInstance,
+						null,
+						abstractResultView.getDateFormatter(),
+						JSONObject.DEFAULT_GENERATE_FEATURE,
+						SerializerFeature.WriteDateUseDateFormat,
+						SerializerFeature.PrettyFormat,
+						SerializerFeature.WriteMapNullValue
+					)
 		);
 	}
 

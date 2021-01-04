@@ -17,9 +17,6 @@ public interface BaseResultView {
 
     String fail(AbstractResultView data);
 
-    default String test(AbstractResultView data, Function<AbstractResultView, String> function){
-        Objects.requireNonNull(data);
-        return function.apply(data);
-    }
+    String output(AbstractResultView data, Function<AbstractResultView, String> function);
 
 }
