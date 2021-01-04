@@ -35,7 +35,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 		if(data == null){
 			throw new NullPointerException("ResultView is null ...");
 		}
-		SerializeFilter[] serializeFilters = validResultViewFilter(data, true, includeProperties);
+		SerializeFilter[] serializeFilters = getResultViewFilter(data, true, includeProperties);
 		return jsonFormatter(data, serializeFilters);
 	}
 	
@@ -44,7 +44,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 		if(data == null){
 			throw new NullPointerException("ResultView is null ...");
 		}
-		SerializeFilter[] serializeFilters = validResultViewFilter(data, false, excludeProperties);
+		SerializeFilter[] serializeFilters = getResultViewFilter(data, false, excludeProperties);
 		return jsonFormatter(data,serializeFilters);
 	}
 
@@ -75,7 +75,7 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 
 	//includeType : true 包含类型
 	//includeType : false 排除类型
-	private SerializeFilter[] validResultViewFilter(AbstractResultView resultView, boolean includeType, String[] properties){
+	private SerializeFilter[] getResultViewFilter(AbstractResultView resultView, boolean includeType, String[] properties){
 		SerializeFilter[] resultViewFilter = null;
 		if(properties == null || properties.length == 0){
 			if(resultView.getCodeMap() != null) {
