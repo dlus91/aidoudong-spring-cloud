@@ -3,6 +3,7 @@ package com.aidoudong.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.aidoudong.common.ResultView;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class MobileLoginController {
 		request.getSession().setAttribute(SESSION_KEY, code);
 		// 3, 发送验证码到用户手机上
 		smsSend.sendSms(request.getParameter("mobile"), code);
-		return ResultView.success().outPutData();
+		return JSONObject.toJSONString(ResultView.success());
 	}
 	
 }

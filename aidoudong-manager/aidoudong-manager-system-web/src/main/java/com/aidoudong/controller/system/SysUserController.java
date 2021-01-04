@@ -51,7 +51,7 @@ public class SysUserController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<SysUser> page,SysUser sysUser) {
-		return fastJsonResultView.ok(ResultView.success(sysUserService.selectPage(page, sysUser)));
+		return fastJsonResultView.data(ResultView.success(sysUserService.selectPage(page, sysUser)));
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class SysUserController {
 	public String deleteById(@PathVariable Long id) {
 		// 逻辑删除，只做更新
 		sysUserService.deleteById(id);
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 	

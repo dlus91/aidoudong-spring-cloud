@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aidoudong.common.ResultView;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 		cancelCookie(request,response);
 
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(ResultView.fail(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录").outPutData());
+		response.getWriter().write(JSONObject.toJSONString(ResultView.fail(HttpStatus.UNAUTHORIZED.value(),"登录已超时,请重新登录")));
 		
 	}
 	

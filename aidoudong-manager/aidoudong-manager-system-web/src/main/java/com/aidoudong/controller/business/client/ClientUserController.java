@@ -58,7 +58,7 @@ public class ClientUserController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<ClientUser> page,ClientUser clientUser) {
-		return fastJsonResultView.ok(ResultView.success(clientUserService.selectPage(page, clientUser)));
+		return fastJsonResultView.data(ResultView.success(clientUserService.selectPage(page, clientUser)));
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class ClientUserController {
 	public String deleteById(@PathVariable Long id) {
 		// 逻辑删除，只做更新
 		clientUserService.deleteById(id);
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 	

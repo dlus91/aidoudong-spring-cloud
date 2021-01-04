@@ -37,7 +37,7 @@ public class SysRoleController {
 	@PostMapping("/page")
 	@ResponseBody
 	public String page(Page<SysRole> page, SysRole sysRole) {
-		return fastJsonResultView.ok(ResultView.success(sysRoleService.selectPage(page, sysRole)));
+		return fastJsonResultView.data(ResultView.success(sysRoleService.selectPage(page, sysRole)));
 	}
 	
 	/**
@@ -79,6 +79,6 @@ public class SysRoleController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		sysRoleService.deleteById(id);
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 }

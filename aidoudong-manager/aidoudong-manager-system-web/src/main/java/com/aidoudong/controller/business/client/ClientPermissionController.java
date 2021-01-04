@@ -42,7 +42,7 @@ public class ClientPermissionController {
 	public String list() {
 		// Mybatis-plus已经提供的，查询SysPermission表中的所有记录
 		List<ClientPermission> list = clientPermissionService.list();
-		return fastJsonResultView.ok(ResultView.success(list));
+		return fastJsonResultView.data(ResultView.success(list));
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class ClientPermissionController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		clientPermissionService.deleteById(id);
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 	

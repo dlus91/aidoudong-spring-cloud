@@ -41,7 +41,7 @@ public class ExceptionHandle {
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
     public String handleParamException(HttpMessageNotReadableException httpMessageNotReadableException) {
         String msg = PropertiesEnum.ERROR_CODE_EN.getProperty(httpMessageNotReadableException.getMessage());
-        return fastJsonResultView.fail(ResultView.of(PARAM_CODE,PARAM_MESSAGE,msg));
+        return fastJsonResultView.data(ResultView.of(PARAM_CODE,PARAM_MESSAGE,msg));
     }
 	
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -53,7 +53,7 @@ public class ExceptionHandle {
 		for(ObjectError error : errorList) {
 			resultList.add(errorCodeProps.getProperty(error.getDefaultMessage()));
 		}
-		return fastJsonResultView.fail(ResultView.of(PARAM_CODE,PARAM_MESSAGE,resultList));
+		return fastJsonResultView.data(ResultView.of(PARAM_CODE,PARAM_MESSAGE,resultList));
     }
 	
     @ExceptionHandler(value = BussinessException.class) // 处理BussinessException异常
@@ -61,7 +61,7 @@ public class ExceptionHandle {
         Properties errorCodeProps =  PropertiesEnum.ERROR_CODE_EN.getProperties();
     	String msg = errorCodeProps.getProperty(bussiness.getMessage());
     	int exceptionCode = bussiness.getCode() > 0 ? bussiness.getCode() : BUSSINESS_CODE;
-		return fastJsonResultView.fail(ResultView.of(exceptionCode,PARAM_MESSAGE,msg));
+		return fastJsonResultView.data(ResultView.of(exceptionCode,PARAM_MESSAGE,msg));
     }
     
     @ExceptionHandler(value = Exception.class) // 处理Exception异常
@@ -78,7 +78,7 @@ public class ExceptionHandle {
             }
             String msg = stringBuilder.toString();
             logger.error("ConstraintViolation msg is : " + msg);
-            resultStr = fastJsonResultView.fail(ResultView.of(BUSSINESS_CODE,PARAM_MESSAGE,msg));
+            resultStr = fastJsonResultView.data(ResultView.of(BUSSINESS_CODE,PARAM_MESSAGE,msg));
         } else if (e instanceof MissingServletRequestParameterException) {
             MissingServletRequestParameterException applicationException = (MissingServletRequestParameterException) e;
             String parameterName = applicationException.getParameterName();
@@ -86,30 +86,30 @@ public class ExceptionHandle {
             String msg = "parameter "
                     + parameterName + " is null "
                     + " , expect: " + parameterType;
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpMediaTypeNotSupportedException) {
             HttpMediaTypeNotSupportedException applicationException = (HttpMediaTypeNotSupportedException) e;
             String msg = Objects.requireNonNull(applicationException.getContentType()).getSubtype();
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             HttpRequestMethodNotSupportedException applicationException = (HttpRequestMethodNotSupportedException) e;
             String msg = applicationException.getMethod();
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof NoHandlerFoundException) {
             NoHandlerFoundException applicationException = (NoHandlerFoundException) e;
             String msg = applicationException.getHttpMethod() + " --> " + applicationException.getRequestURL();
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof MethodArgumentTypeMismatchException) {
             MethodArgumentTypeMismatchException applicationException = (MethodArgumentTypeMismatchException) e;
             String msg = "parameter " + applicationException.getName()
                     + " is not type of " + Objects.requireNonNull(applicationException.getRequiredType()).getSimpleName();
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else if (e instanceof HttpMessageNotReadableException) {
             HttpMessageNotReadableException applicationException = (HttpMessageNotReadableException) e;
             String msg = applicationException.getMessage();
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, msg));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, msg));
         } else {
-            resultStr = fastJsonResultView.fail(ResultView.fail(ERROR_CODE, e.getMessage()));
+            resultStr = fastJsonResultView.data(ResultView.fail(ERROR_CODE, e.getMessage()));
         }
         return resultStr;
     }

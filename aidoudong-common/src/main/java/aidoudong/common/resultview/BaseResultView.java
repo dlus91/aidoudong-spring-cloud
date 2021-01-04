@@ -9,13 +9,13 @@ import java.util.function.Function;
  */
 public interface BaseResultView {
 
-    String ok(AbstractResultView data);
+    String data(AbstractResultView data);
+
+    String codeMap(AbstractResultView data);
 
     String include(AbstractResultView data, String[] includeProperties);
 
     String exclude(AbstractResultView data, String[] excludeProperties);
-
-    String fail(AbstractResultView data);
 
     String output(AbstractResultView data, Function<AbstractResultView, String> function);
 

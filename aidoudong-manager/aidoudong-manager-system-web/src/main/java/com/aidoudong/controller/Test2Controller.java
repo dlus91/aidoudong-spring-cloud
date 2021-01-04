@@ -35,7 +35,7 @@ public class Test2Controller {
 	public String page(Page<ClientUser> page,ClientUser clientUser) {
 		ClientUser user = new ClientUser();
 		user.setUsername("test");
-		return fastJsonResultView.ok(
+		return fastJsonResultView.codeMap(
 				ResultView.success(clientUserService.selectPage(page, user)));
 	}
 	
@@ -67,7 +67,7 @@ public class Test2Controller {
 
 	@GetMapping("/page/include3")
 	public String pageInclude3() {
-		return fastJsonResultView.ok(ResultView.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
+		return fastJsonResultView.data(ResultView.success(PropertiesEnum.ERROR_CODE_EN.getProperties()));
 	}
 
 	@GetMapping("/page/include4")
@@ -93,7 +93,7 @@ public class Test2Controller {
 	
 	@GetMapping("/fail")
 	public String fail() {
-		return fastJsonResultView.fail(ResultView.fail("ERROR_EXIST"));
+		return fastJsonResultView.data(ResultView.fail("ERROR_EXIST"));
 	}
 	
 }

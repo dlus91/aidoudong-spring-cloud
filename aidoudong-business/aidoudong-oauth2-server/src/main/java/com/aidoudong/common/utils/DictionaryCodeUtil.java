@@ -46,9 +46,9 @@ public final class DictionaryCodeUtil implements BaseDictionaryCodeUtil {
 	}
 	
 	public static String getValue(String code,String valueCode) {
-		Map<String, String> simpleCodeMap = codeMap.get(code);
-		if(simpleCodeMap == null || simpleCodeMap.isEmpty()){ return ""; }
-		String resultValue = simpleCodeMap.get(valueCode);
+		Map<String, String> singleCodeMap = codeMap.get(code);
+		if(singleCodeMap == null || singleCodeMap.isEmpty()){ return ""; }
+		String resultValue = singleCodeMap.get(valueCode);
 		return null == resultValue ? "" : resultValue;
 	}
 	

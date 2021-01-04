@@ -15,7 +15,7 @@ public class TestFeignFallback implements TestFeignClient{
 	@Override
 	public String findByIdJson() {
 		
-		return fastJsonResultView.ok(ResultView.success(Lists.newArrayList("测试1","测试2")));
+		return fastJsonResultView.data(ResultView.success(Lists.newArrayList("测试1","测试2")));
 	}
 
 

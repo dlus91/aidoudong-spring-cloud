@@ -56,9 +56,9 @@ public class TestController {
 	@ResponseBody
 	public String deleteById(@PathVariable Long id) {
 		if(id < 0) {
-			return fastJsonResultView.fail(ResultView.fail("id不能小于0"));
+			return fastJsonResultView.data(ResultView.fail("id不能小于0"));
 		}
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 	// 过滤请求参数：fiterTarget指定哪个参数，filterObject是集合中的每个元素，
@@ -67,7 +67,7 @@ public class TestController {
 	@GetMapping("/batch/{ids}") // /user/batch/{ids} -1,1,4
 	@ResponseBody
 	public String deleteByIds(@PathVariable List<Long> ids) {
-		return fastJsonResultView.ok(ResultView.success(ids));
+		return fastJsonResultView.data(ResultView.success(ids));
 	}
 	
 	// 过滤返回值：filterObject是返回值集合中的每一个元素，当表达式等于true则对应元素返回

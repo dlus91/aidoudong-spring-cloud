@@ -17,7 +17,12 @@ import java.util.function.Function;
 public abstract class AbstractFastJsonResultView implements BaseResultView {
 
 	@Override
-	public String ok(AbstractResultView data) {
+	public String data(AbstractResultView data) {
+		return jsonFormatter(data,null);
+	}
+
+	@Override
+	public String codeMap(AbstractResultView data) {
 		SerializeFilter[] serializeFilters = null;
 		if(data != null){
 			serializeFilters = validCodeMap(data.getCodeMap());
@@ -41,11 +46,6 @@ public abstract class AbstractFastJsonResultView implements BaseResultView {
 		}
 		SerializeFilter[] serializeFilters = validResultViewFilter(data, false, excludeProperties);
 		return jsonFormatter(data,serializeFilters);
-	}
-
-	@Override
-	public String fail(AbstractResultView data) {
-		return jsonFormatter(data,null);
 	}
 
 	@Override

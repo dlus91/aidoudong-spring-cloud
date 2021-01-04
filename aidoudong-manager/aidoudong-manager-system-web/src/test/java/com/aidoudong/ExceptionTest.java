@@ -25,14 +25,14 @@ public class ExceptionTest {
     public void test01(){
         System.out.println("=========数组========");
         String[] strArray = new String[]{"a","b","c","d"};
-        System.out.println(fastJsonResultView.fail(ResultView.of(500,"测试数组异常",strArray)));
+        System.out.println(fastJsonResultView.data(ResultView.of(500,"测试数组异常",strArray)));
 
         System.out.println("=========字符串========");
-        System.out.println(fastJsonResultView.fail(ResultView.of(500,"测试字符串异常","测试测试测试字符串")));
+        System.out.println(fastJsonResultView.data(ResultView.of(500,"测试字符串异常","测试测试测试字符串")));
 
         System.out.println("=========集合1========");
         List<String> list = Arrays.asList("a", "b", "c", "d");
-        System.out.println(fastJsonResultView.fail(ResultView.of(500,"测试集合1异常",list)));
+        System.out.println(fastJsonResultView.data(ResultView.of(500,"测试集合1异常",list)));
         System.out.println("=========集合2========");
 //        Map.of jdk11
         Map<String,Integer> map = new HashMap();
@@ -40,7 +40,7 @@ public class ExceptionTest {
         map.put("b",2);
         map.put("c",3);
         map.put("d",4);
-        System.out.println(fastJsonResultView.fail(ResultView.of(500,"测试集合2异常",map)));
+        System.out.println(fastJsonResultView.data(ResultView.of(500,"测试集合2异常",map)));
     }
 
 

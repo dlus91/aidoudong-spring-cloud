@@ -48,23 +48,23 @@ public class ProductControler {
 		
 		resultList.addAll(list);
 		
-		return fastJsonResultView.ok(ResultView.success(resultList));
+		return fastJsonResultView.data(ResultView.success(resultList));
 	}
 	
 	@GetMapping("/id/{id}")
 	public String getById(@PathVariable() Long id) {
-		return fastJsonResultView.ok(ResultView.success(productServiceImpl.findById(id)));
+		return fastJsonResultView.data(ResultView.success(productServiceImpl.findById(id)));
 	}
 	
 	@GetMapping("/findAll")
 	public String findAll() {
-		return fastJsonResultView.ok(ResultView.success(productServiceImpl.findAll()));
+		return fastJsonResultView.data(ResultView.success(productServiceImpl.findAll()));
 	}
 	
 	@PostMapping("/update")
 	public String update(Product product) {
 		productServiceImpl.update(product);
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 }

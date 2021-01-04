@@ -40,8 +40,12 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 	private static final String pageJpaType = "JpaPage";
 	private static final String resultConvertCode = "code";
 
-	public String ok(ResultView data) {
-		return super.ok(data);
+	public String data(ResultView data) {
+		return super.data(data);
+	}
+
+	public String codeMap(ResultView data) {
+		return super.codeMap(data);
 	}
 
 	public String include(ResultView data, String[] includeProperties) {
@@ -50,10 +54,6 @@ public class FastJsonResultView extends AbstractFastJsonResultView {
 
 	public String exclude(ResultView data, String[] excludeProperties) {
 		return super.exclude(data, excludeProperties);
-	}
-
-	public String fail(ResultView data) {
-		return super.fail(data);
 	}
 
 	@Override

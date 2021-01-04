@@ -74,7 +74,7 @@ public class MainController {
 	@ResponseBody
 	public String refreshDectionaryTable() {
 		dictionaryCodeUtil.refresh();
-		return fastJsonResultView.ok(ResultView.success());
+		return fastJsonResultView.data(ResultView.success());
 	}
 	
 }

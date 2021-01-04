@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aidoudong.common.ResultView;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 				securityProperties.getAuthentication().getLoginType())) {
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			// 认证失败响应json字符串
-			response.getWriter().write(ResultView.fail(HttpStatus.UNAUTHORIZED.value(),exception.getMessage()).outPutData());
+			response.getWriter().write(JSONObject.toJSONString(ResultView.fail(HttpStatus.UNAUTHORIZED.value(),exception.getMessage())));
 		}else {
 //			super.setDefaultFailureUrl(securityProperties.getAuthentication().getLoginPage()+"?error");
 			// 获取上一次请求路径
